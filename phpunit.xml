@@ -1,0 +1,35 @@
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="true">
+
+    <testsuites>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Integration</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="junit" target="build/report.junit.xml"/>
+        <log type="coverage-text" target="php://stdout"/>
+        <log type="coverage-html" target="build/coverage"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
+    <php>
+        <env name="AMO_CLIENT_ID" value="testClientID"/>
+        <env name="AMO_CLIENT_SECRET" value="testClientSecret"/>
+        <env name="AMO_BASE_URL" value="https://api.amo.io"/>
+        <env name="AMO_AUTH_URL" value="https://id.amo.tm"/>
+    </php>
+</phpunit>
