@@ -15,7 +15,7 @@ PHP 7.4.0 and later.
 You can install the sdk via [Composer](http://getcomposer.org/). Run the following command:
 
 ```bash
-composer require amo-tm/amosdk-php@1.0.0-BETA
+composer require amo-tm/amosdk-php@v1.0.0-BETA
 ```
 
 To use the sdk, use Composer's [autoload](https://getcomposer.org/doc/01-basic-usage.md#autoloading):
@@ -70,7 +70,7 @@ $appScopedSdk = $sdk->withToken($sdk->getApplicationToken())
 // store token in database
 ```
 
-## Team create
+## Create team 
 
 > **REQUIRED:** AppToken
 >
@@ -93,7 +93,7 @@ $newTeam = $appScopedSdk->team()->create(new Team([
 print "team created with id " . $newTeam->getId();
 ```
 
-## Profile create
+## Create profile
 
 > **REQUIRED:** AppToken
 >
