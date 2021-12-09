@@ -1,6 +1,7 @@
 <?php
 
 namespace Amo\Sdk\Models\Messages;
+
 use Amo\Sdk\Models\AbstractModel;
 use Amo\Sdk\Models\Participant;
 use Carbon\Carbon;
@@ -152,6 +153,4 @@ class Message extends AbstractModel
     {
         $this->replyTo = $replyTo;
     }
-
-
 }

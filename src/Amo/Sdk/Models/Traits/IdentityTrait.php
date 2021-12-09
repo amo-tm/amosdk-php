@@ -15,6 +15,4 @@ trait IdentityTrait
     {
         return $this->type;
     }
-
-
 }

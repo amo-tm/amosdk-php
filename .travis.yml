@@ -13,7 +13,6 @@ dist: bionic
 php:
   - 7.4
   - 8.0
-  - 8.1
 
 install:
   - if [[ $MINIMUM_VERSIONS = false ]]; then composer install; fi

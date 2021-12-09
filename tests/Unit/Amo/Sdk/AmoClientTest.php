@@ -46,36 +46,6 @@ class AmoClientTest extends TestCase
         Assert::assertEquals($queryParams['client_id'], self::clientID);
     }
 
-    public function testGetApplicationToken()
-    {
-        $expectedToken = new AccessToken([
-            'token_type' => 'Bearer',
-            'expires_in' => 86400,
-            'access_token' => 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjRkOTMxMmRhMzVjZWY4NmYzOTI3MTZkMTI2Njk4OTc1ZTY5NjZlNjRmOGIxNmU1MjViNTc5ZTE3MDBiN2Q3YWI3N2M1MDU0MTY1YzY5NDI1In0'
-        ]);
-
-        $container = [];
-        $history = Middleware::history($container);
-
-        $mock = new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json; charset=UTF-8'], json_encode($expectedToken->jsonSerialize()))
-        ]);
-        $handlerStack = HandlerStack::create($mock);
-        $handlerStack->push($history);
-
-        $sdk = $this->createClient(new Client(['handler' => $handlerStack]));
-
-        $appToken = $sdk->getApplicationToken();
-
-        Assert::assertEquals($expectedToken, $appToken);
-
-        foreach ($container as $transaction) {
-            /** @var Request $request */
-            $request = $transaction['request'];
-            echo $request->getBody();
-        }
-    }
-
     public function testExchangeCode()
     {
         $expectedToken = new AccessToken([
@@ -114,7 +84,6 @@ class AmoClientTest extends TestCase
             InMemory::plainText(self::clientSecret),
         )->parser()->parse($appToken->getToken());
 
-        print_r($parsedToken);
         self::assertTrue($parsedToken->hasBeenIssuedBy('app'));
         self::assertTrue($parsedToken->isRelatedTo(self::clientID));
     }

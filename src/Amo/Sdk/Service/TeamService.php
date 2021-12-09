@@ -20,29 +20,40 @@ class TeamService extends AbstractService
     }
 
 
-    public function create(Team $team): Team {
-        $resp = $this->apiClient->post($this->teamUrl(), [
+    public function create(Team $team): Team
+    {
+        $resp = $this->apiClient->post(
+            $this->teamUrl(),
+            [
             'body' => $team,
-        ]);
+            ]
+        );
         return Team::fromStream($resp->getBody());
     }
 
-    public function invite(string $userId, TeamProps $teamProps = null): User {
-        $resp = $this->apiClient->post($this->teamUrl('/invite'), [
-            'body' => new FreeModel([
+    public function invite(string $userId, TeamProps $teamProps = null): User
+    {
+        $resp = $this->apiClient->post(
+            $this->teamUrl('/invite'),
+            [
+            'body' => new FreeModel(
+                [
                 'user_id' => $userId,
                 'team_props' => $teamProps
-            ]),
-        ]);
+                ]
+            ),
+            ]
+        );
         return User::fromStream($resp->getBody());
     }
 
-    public function kick(string $userId): void {
+    public function kick(string $userId): void
+    {
         $this->apiClient->delete($this->teamUrl(['users', $userId]));
     }
 
     /**
-     * @param string|string[] $location
+     * @param  string|string[] $location
      * @return string
      */
     private function teamUrl($location = ''): string
@@ -70,7 +81,8 @@ class TeamService extends AbstractService
         );
     }
 
-    public function getAccessToken(): ?AccessToken {
+    public function getAccessToken(): ?AccessToken
+    {
         return $this->apiClient->getAccessToken();
     }
 }

@@ -1,0 +1,7 @@
+version: "3.4"
+services:
+  composer:
+    build:
+      context: .docker/composer
+    volumes:
+      - ".:/var/www"

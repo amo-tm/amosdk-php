@@ -21,7 +21,8 @@ abstract class AbstractModel
         $this->setData($data);
     }
 
-    protected function toApi(): array {
+    protected function toApi(): array
+    {
         $resp = [];
         $hiddenProps = array_merge($this->forceHidden, $this->hidden);
         foreach ($this->getProperties() as $key => $value) {
@@ -37,7 +38,8 @@ abstract class AbstractModel
         return $resp;
     }
 
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return json_encode($this->toApi(), JSON_FORCE_OBJECT);
     }
 
@@ -45,7 +47,7 @@ abstract class AbstractModel
     {
         if (! ctype_lower($key)) {
             $key = preg_replace('/\s+/u', '', ucwords($key));
-            $key = mb_strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1'.'_', $key));
+            $key = mb_strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $key));
         }
         return $key;
     }
@@ -56,7 +58,7 @@ abstract class AbstractModel
     }
 
     /**
-     * @param $value
+     * @param  $value
      * @return mixed
      */
     private function valueToApi($value)
@@ -68,7 +70,7 @@ abstract class AbstractModel
     }
 
     /**
-     * @param StreamInterface $stream
+     * @param  StreamInterface $stream
      * @return static
      */
     public static function fromStream(StreamInterface $stream)
@@ -77,7 +79,7 @@ abstract class AbstractModel
     }
 
     /**
-     * @param string $camelKey
+     * @param  string $camelKey
      * @return bool
      */
     protected function isPropertyExists(string $camelKey): bool
