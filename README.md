@@ -144,46 +144,50 @@ $invitedUser = $teamService->invite($createdProfile->getId(), new TeamProps([
 > **SCOPE:** profiles,teams
 
 ```php
-/** @var \Amo\Sdk\Service\TeamService $teamScopeSdk */
-$teamScopeSdk->kick($invitedUser->getId());
+/** @var \Amo\Sdk\Service\TeamService $teamService */
+$teamService->kick($invitedUser->getId());
 ```
 
 ## Subject create
 
 > **REQUIRED:** TeamToken
-
+> 
+> **SCOPE:** teams
 
 ```php
-$sdk = new AmoClient([
-    'clientID' => 'your_client_id',
-    'clientSecret' => 'your_client_secret',
-]);
+/** @var \Amo\Sdk\Service\TeamService $teamService */
+$subjectsService = $teamService->subjectService();
 
-$appScopedSdk = $sdk->withToken($sdk->getApplicationToken());
-$newSubject = $appScopedSdk->subject()->create(new Subject([
-    'title' => 'subjectTitle',
-    'external_link' => 'subjectExternalLink',
-    'author' => Participant::User('user_id'),
+$newSubject = $subjectsService->create(new Subject([
+    'title' => 'Subject Title',
+    'external_link' => 'https://example.com/',
+    'author' => Participant::user($createdProfile->getId()),
     'participants' => array(
-        Participant::User('user_id')
+        Participant::user($createdProfile->getId()),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
     ),
     'subscribers' => array(
-        Participant::User('user_id')
+        Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
     ),
     'threads' => array(
-        new SubjectThread(
+        new SubjectThreadCreateRequest(
             [
-                'title' => 'threadTitle',
-                'avatar_url' => 'threadAvatarUrl'
+                'title' => 'Thread Title',
+                'avatar_url' => 'https://picsum.photos/600'
             ]
 
         )
     ),
     'status' => array(
-        new SubjectStatus(
+        new SubjctStatus(
             [
-                'title' => 'statusTitle',
-                'color' => 'color hex'
+                'title' => 'Status hex',
+                'color' => '#F37553'
             ]
         )
     ),
