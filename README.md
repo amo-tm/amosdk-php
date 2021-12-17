@@ -186,7 +186,7 @@ $newSubject = $subjectsService->create(new Subject([
     'status' => array(
         new SubjctStatus(
             [
-                'title' => 'Status hex',
+                'title' => 'Status Title',
                 'color' => '#F37553'
             ]
         )
