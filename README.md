@@ -150,7 +150,7 @@ $teamScopeSdk->kick($invitedUser->getId());
 
 ## Subject create
 
-> **REQUIRED:** AppToken
+> **REQUIRED:** TeamToken
 
 
 ```php
@@ -163,43 +163,24 @@ $appScopedSdk = $sdk->withToken($sdk->getApplicationToken());
 $newSubject = $appScopedSdk->subject()->create(new Subject([
     'title' => 'subjectTitle',
     'external_link' => 'subjectExternalLink',
-    'author' => new Participant(
-        [
-            'user_id' => 'profileID'
-        ]
-    ),
+    'author' => Participant::User('user_id'),
     'participants' => array(
-        new Participant(
-            [
-                "user_id" => "profileID"
-            ]
-        ),
+        Participant::User('user_id')
     ),
     'subscribers' => array(
-        new Participant(
-            [
-                "user_id" => "profileID"
-            ]
-        )
+        Participant::User('user_id')
     ),
     'threads' => array(
-        new AmoThread(
+        new SubjectThread(
             [
-                'id' => 'threadID',
                 'title' => 'threadTitle',
-                'source' => new ThreadSource(
-                    [
-                        'id' => 'threadSourceId',
-                        'title' => 'threadSourceTitle'
-                    ]
-                ),
                 'avatar_url' => 'threadAvatarUrl'
             ]
 
         )
     ),
     'status' => array(
-        new ThreadStatus(
+        new SubjectStatus(
             [
                 'title' => 'statusTitle',
                 'color' => 'color hex'
@@ -208,7 +189,5 @@ $newSubject = $appScopedSdk->subject()->create(new Subject([
     ),
 ]));
 
-
 print "subject created with id " . $newSubject->getId();
-
 ```
