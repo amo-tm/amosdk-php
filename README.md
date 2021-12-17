@@ -147,3 +147,68 @@ $invitedUser = $teamService->invite($createdProfile->getId(), new TeamProps([
 /** @var \Amo\Sdk\Service\TeamService $teamScopeSdk */
 $teamScopeSdk->kick($invitedUser->getId());
 ```
+
+## Subject create
+
+> **REQUIRED:** AppToken
+
+
+```php
+$sdk = new AmoClient([
+    'clientID' => 'your_client_id',
+    'clientSecret' => 'your_client_secret',
+]);
+
+$appScopedSdk = $sdk->withToken($sdk->getApplicationToken());
+$newSubject = $appScopedSdk->subject()->create(new Subject([
+    'title' => 'subjectTitle',
+    'external_link' => 'subjectExternalLink',
+    'author' => new Participant(
+        [
+            'user_id' => 'profileID'
+        ]
+    ),
+    'participants' => array(
+        new Participant(
+            [
+                "user_id" => "profileID"
+            ]
+        ),
+    ),
+    'subscribers' => array(
+        new Participant(
+            [
+                "user_id" => "profileID"
+            ]
+        )
+    ),
+    'threads' => array(
+        new AmoThread(
+            [
+                'id' => 'threadID',
+                'title' => 'threadTitle',
+                'source' => new ThreadSource(
+                    [
+                        'id' => 'threadSourceId',
+                        'title' => 'threadSourceTitle'
+                    ]
+                ),
+                'avatar_url' => 'threadAvatarUrl'
+            ]
+
+        )
+    ),
+    'status' => array(
+        new ThreadStatus(
+            [
+                'title' => 'statusTitle',
+                'color' => 'color hex'
+            ]
+        )
+    ),
+]));
+
+
+print "subject created with id " . $newSubject->getId();
+
+```
