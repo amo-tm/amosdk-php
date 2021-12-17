@@ -152,16 +152,14 @@ $teamService->kick($invitedUser->getId());
 
 > **REQUIRED:** TeamToken
 > 
-> **SCOPE:** teams
+> **SCOPE:** objects_own
 
 ```php
 /** @var \Amo\Sdk\Service\TeamService $teamService */
-$subjectsService = $teamService->subjectService();
-
-$newSubject = $subjectsService->create(new Subject([
+$newSubject = $teamService->subject()->create(new Subject([
     'title' => 'Subject Title',
     'external_link' => 'https://example.com/',
-    'author' => Participant::user($createdProfile->getId()),
+    'author' => Participant::user($createdProfile),
     'participants' => array(
         Participant::user($createdProfile->getId()),
         Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
