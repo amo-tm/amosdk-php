@@ -4,7 +4,7 @@ namespace Amo\Sdk\Models\Traits;
 
 trait PrimaryKeyTrait
 {
-    protected string $id;
+    protected ?string $id = '';
 
     /**
      * @return string

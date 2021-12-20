@@ -106,7 +106,11 @@ abstract class AbstractModel
                 $propType = $this->cast[$camelKey] ?? null;
                 if ($propType) {
                     if (class_exists($propType)) {
-                        $this->setProperty($camelKey, new $propType($value));
+                        if ($value instanceof $propType) {
+                            $this->setProperty($camelKey, $value);
+                        } else {
+                            $this->setProperty($camelKey, new $propType($value));
+                        }
                     }
                 } else {
                     $this->setProperty($camelKey, $value);
