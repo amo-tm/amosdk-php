@@ -2,7 +2,7 @@
 
 namespace Amo\Sdk\Models;
 
-class Participants extends AbstractCollectionModel
+class ParticipantCollection extends AbstractCollectionModel
 {
     protected string $itemClass = Participant::class;
 }

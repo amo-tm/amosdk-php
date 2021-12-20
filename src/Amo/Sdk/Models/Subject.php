@@ -13,7 +13,7 @@ class Subject extends AbstractModel
     protected string $title;
     protected string $externalLink;
     protected Participant $author;
-    protected Participants $participants;
+    protected ParticipantCollection $participants;
 
 //    protected array $subscribers;
 //    protected array $threads;
@@ -22,7 +22,7 @@ class Subject extends AbstractModel
 
     protected array $cast = [
         'author' => Participant::class,
-        'participants' => Participants::class
+        'participants' => ParticipantCollection::class
     ];
 
     /**

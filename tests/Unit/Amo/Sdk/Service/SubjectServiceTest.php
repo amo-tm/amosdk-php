@@ -4,7 +4,7 @@ namespace Unit\Amo\Sdk\Service;
 
 use Amo\Sdk\AmoClient;
 use Amo\Sdk\Models\ParticipantInterface;
-use Amo\Sdk\Models\Participants;
+use Amo\Sdk\Models\ParticipantCollection;
 use Amo\Sdk\Models\Team;
 use Amo\Sdk\Models\Subject;
 use Amo\Sdk\Models\Participant;
@@ -31,7 +31,7 @@ class SubjectServiceTest extends TestCase
             'title' => 'Subject Title',
             'external_link' => 'https://example.com/',
             'author' => Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
-            'participants' => new Participants([
+            'participants' => new ParticipantCollection([
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
@@ -58,7 +58,7 @@ class SubjectServiceTest extends TestCase
             'title' => 'Subject Title',
             'external_link' => 'https://example.com/',
             'author' =>  Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
-            'participants' => new Participants([
+            'participants' => new ParticipantCollection([
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
