@@ -19,7 +19,7 @@ class Team extends AbstractModel
     }
 
     /**
-     * @param string $title
+     * @param  string $title
      * @return Team
      */
     public function setTitle(string $title): Team

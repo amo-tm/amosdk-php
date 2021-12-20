@@ -48,7 +48,8 @@ class AmoProvider extends AbstractProvider
 
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        print_r($response);die();
+        print_r($response);
+        die();
     }
 
     protected function getBaseAmoIDUrl(): string

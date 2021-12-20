@@ -8,7 +8,7 @@ class User extends AbstractModel
 {
     use PrimaryKeyTrait;
 
-    protected array $cast =[
+    protected array $cast = [
         'teamProps' => TeamProps::class
     ];
 

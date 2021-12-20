@@ -18,10 +18,14 @@ class ProfileService extends AbstractService
     }
 
 
-    public function create(Profile $profile): Profile {
-        $resp = $this->apiClient->post($this->profileUrl(), [
+    public function create(Profile $profile): Profile
+    {
+        $resp = $this->apiClient->post(
+            $this->profileUrl(),
+            [
             'body' => $profile,
-        ]);
+            ]
+        );
         return Profile::fromStream($resp->getBody());
     }
 
