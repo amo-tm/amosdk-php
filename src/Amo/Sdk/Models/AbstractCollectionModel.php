@@ -18,12 +18,14 @@ class AbstractCollectionModel extends AbstractModel
         }
 
         foreach ($data as $item) {
-            if (!$item instanceof AbstractModel) {
-                throw new \InvalidArgumentException('invalid item type. Must be instance of AbstractModel');
+            if ($item instanceof $this->itemClass) {
+                $this->items[] = $item;
+            } else {
+                $this->items[] = new $this->itemClass($item);
             }
-            $this->items[] = new $this->itemClass($item);
         }
     }
+
 
     protected function toApi(): array
     {
@@ -31,6 +33,6 @@ class AbstractCollectionModel extends AbstractModel
         foreach ($this->items as $item) {
             $data[] = $item->toApi();
         }
-        return $data;
+        return array_values($data);
     }
 }

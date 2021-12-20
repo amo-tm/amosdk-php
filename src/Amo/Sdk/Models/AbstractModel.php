@@ -40,7 +40,17 @@ abstract class AbstractModel
 
     public function __toString(): string
     {
-        return json_encode($this->toApi(), JSON_FORCE_OBJECT);
+        return $this->toJson();
+    }
+
+    public function toJson(): string
+    {
+        $data = $this->toApi();
+        if ($data) {
+            return json_encode($data);
+        } else {
+            return json_encode($data, JSON_FORCE_OBJECT);
+        }
     }
 
     private function toSnake(string $key): string

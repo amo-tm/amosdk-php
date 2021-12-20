@@ -11,6 +11,7 @@ class Participant extends AbstractModel
     protected ?string $departmentId = null;
     protected ?string $botId = null;
     protected ?string $accessListId = null;
+    protected ?string $threadId = null;
 
     static public function user(string $id): Participant
     {
@@ -29,31 +30,41 @@ class Participant extends AbstractModel
     static public function bot(string $id): Participant
     {
         return new Participant([
-            'department_id' => $id,
+            'bot_id' => $id,
         ]);
     }
 
     static public function accessList(string $id): Participant
     {
         return new Participant([
-            'department_id' => $id,
+            'access_list_id' => $id,
         ]);
     }
 
-    public function getId(): string
+    static public function thread(string $id): Participant
+    {
+        return new Participant([
+            'thread_id' => $id,
+        ]);
+    }
+
+    public function getId(): ?string
     {
         if ($this->userId) {
             return $this->userId;
-        }
-        if ($this->departmentId) {
+        } else if ($this->departmentId) {
             return $this->departmentId;
-        }
-        if ($this->accessListId) {
+        } else if ($this->accessListId) {
             return $this->accessListId;
-        }
-        if ($this->botId) {
+        } else if ($this->botId) {
             return $this->botId;
+        } else if ($this->threadId) {
+            return $this->threadId;
         }
-        return '';
+        return null;
+    }
+
+    public function isAll(): bool {
+        return is_null($this->getId());
     }
 }
