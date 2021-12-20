@@ -21,7 +21,7 @@ class AbstractCollectionModel extends AbstractModel
             if (!$item instanceof AbstractModel) {
                 throw new \InvalidArgumentException('invalid item type. Must be instance of AbstractModel');
             }
-            $this->items[] = $item;
+            $this->items[] = new $this->itemClass($item);
         }
     }
 
