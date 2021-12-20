@@ -3,18 +3,14 @@
 namespace Unit\Amo\Sdk\Service;
 
 use Amo\Sdk\AmoClient;
-use Amo\Sdk\Models\ParticipantInterface;
 use Amo\Sdk\Models\ParticipantCollection;
-use Amo\Sdk\Models\Team;
 use Amo\Sdk\Models\Subject;
 use Amo\Sdk\Models\Participant;
-use Amo\Sdk\Models\SubjectStatus;
-use Amo\Sdk\Models\SubjectThread;
-use Amo\Sdk\Service\SubjectService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -25,6 +21,8 @@ class SubjectServiceTest extends TestCase
     {
         $container = [];
         $history = Middleware::history($container);
+
+        $testTeamID = Uuid::uuid4()->toString();
 
         $featureSubject = new Subject([
             'id' => Uuid::uuid4()->toString(),
@@ -37,8 +35,6 @@ class SubjectServiceTest extends TestCase
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
             ])
         ]);
-
-        print 'default '. $featureSubject;
 
         $mock = new MockHandler([
             new Response(200, ['Content-Type' => 'application/json; charset=UTF-8'], (string)$featureSubject),
@@ -85,12 +81,22 @@ class SubjectServiceTest extends TestCase
 ////            ),
         ]));
 
-        print $createdSubject;
-
         self::assertEquals($featureSubject->getId(), $createdSubject->getId());
         self::assertEquals($featureSubject->getTitle(), $createdSubject->getTitle());
         self::assertEquals($featureSubject->getAuthor(), $createdSubject->getAuthor());
         self::assertEquals($featureSubject->getAuthor(), $createdSubject->getAuthor());
 
+        foreach ($container as $transaction) {
+            /** @var Request $request */
+            $request = $transaction['request'];
+            self::assertEquals(
+                'https://api.amo.io/v1.3/team/' . $testTeamID . '/subjects',
+                (string)$request->getUri(),
+            );
+            self::assertEquals(
+                'POST',
+                $request->getMethod(),
+            );
+        }
     }
 }
