@@ -57,11 +57,11 @@ class SubjectServiceTest extends TestCase
             'title' => 'Subject Title',
             'external_link' => 'https://example.com/',
             'author' =>  Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
-            'participants' => array(
+            'participants' => [
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
-            ),
+            ],
 ////            'subscribers' => array(
 ////                Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
 ////            ),
