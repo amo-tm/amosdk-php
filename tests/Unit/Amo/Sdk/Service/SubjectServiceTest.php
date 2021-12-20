@@ -50,7 +50,7 @@ class SubjectServiceTest extends TestCase
             'httpClient' => new Client(['handler' => $handlerStack]),
         ]);
 
-        $createdSubject = $sdk->team()->subject()->create(new Subject([
+        $createdSubject = $sdk->team($testTeamID)->subject()->create(new Subject([
             'title' => 'Subject Title',
             'external_link' => 'https://example.com/',
             'author' =>  Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
@@ -90,7 +90,7 @@ class SubjectServiceTest extends TestCase
             /** @var Request $request */
             $request = $transaction['request'];
             self::assertEquals(
-                'https://api.amo.io/v1.3/team/' . $testTeamID . '/subjects',
+                'https://api.amo.io/v1.3/teams/' . $testTeamID . '/subjects',
                 (string)$request->getUri(),
             );
             self::assertEquals(
