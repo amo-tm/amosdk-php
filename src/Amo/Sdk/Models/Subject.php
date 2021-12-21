@@ -14,16 +14,50 @@ class Subject extends AbstractModel
     protected string $externalLink;
     protected Participant $author;
     protected ParticipantCollection $participants;
-
-//    protected array $subscribers;
-//    protected array $threads;
-//    protected array $status;
+    protected ParticipantCollection $subscribers;
+    protected SubjectThreadCollection $threads;
+    protected SubjectStatusCollection $status;
 
 
     protected array $cast = [
         'author' => Participant::class,
-        'participants' => ParticipantCollection::class
+        'participants' => ParticipantCollection::class,
+        'subscribers' => ParticipantCollection::class,
+        'threads' => SubjectThreadCollection::class,
+        'status' => SubjectStatusCollection::class,
     ];
+
+    /**
+     * @return array
+     */
+    public function getStatus(): array
+    {
+        return $this->status->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getThreads(): array
+    {
+        return $this->threads->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubscribers(): array
+    {
+        return $this->subscribers->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getParticipants(): array
+    {
+        return $this->participants->toArray();
+    }
 
     /**
      * @return Participant
