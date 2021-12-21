@@ -147,3 +147,49 @@ $invitedUser = $teamService->invite($createdProfile->getId(), new TeamProps([
 /** @var \Amo\Sdk\Service\TeamService $teamScopeSdk */
 $teamScopeSdk->kick($invitedUser->getId());
 ```
+
+## Subject create
+
+> **REQUIRED:** TeamToken
+>
+> **SCOPE:** objects_own
+
+```php
+/** @var \Amo\Sdk\Service\TeamService $teamService */
+$newSubject = $teamService->subject()->create(new Subject([
+    'title' => 'Subject Title',
+    'external_link' => 'https://example.com/',
+    'author' => Participant::user($createdProfile),
+    'participants' => array(
+        Participant::user($createdProfile->getId()),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    ),
+    'subscribers' => array(
+        Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    ),
+    'threads' => array(
+        new SubjectThreadCreateRequest(
+            [
+                'title' => 'Thread Title',
+                'avatar_url' => 'https://picsum.photos/600'
+            ]
+
+        )
+    ),
+    'status' => array(
+        new SubjctStatus(
+            [
+                'title' => 'Status Title',
+                'color' => '#F37553'
+            ]
+        )
+    ),
+]));
+
+print "subject created with id " . $newSubject->getId();
+```
