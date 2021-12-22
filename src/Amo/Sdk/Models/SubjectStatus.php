@@ -6,8 +6,18 @@ use Amo\Sdk\Models\Traits\PrimaryKeyTrait;
 
 class SubjectStatus extends AbstractModel
 {
-    use PrimaryKeyTrait;
-
     protected string $title;
-    protected string $color;
+    protected string $colorHex;
+
+    /**
+     * @param string $title
+     * @param string $colorHex
+     * @return SubjectStatus
+     */
+    static public function status(string $title, string $colorHex): SubjectStatus {
+        return new SubjectStatus([
+            'title'=>$title,
+            'color_hex'=>$colorHex,
+        ]);
+    }
 }

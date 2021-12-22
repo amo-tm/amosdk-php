@@ -6,6 +6,10 @@ use Amo\Sdk\AmoClient;
 use Amo\Sdk\Models\ParticipantCollection;
 use Amo\Sdk\Models\Subject;
 use Amo\Sdk\Models\Participant;
+use Amo\Sdk\Models\SubjectStatusCollection;
+use Amo\Sdk\Models\SubjectThread;
+use Amo\Sdk\Models\SubjectThreadCollection;
+use Amo\Sdk\Models\SubjectStatus;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -33,6 +37,26 @@ class SubjectServiceTest extends TestCase
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
+            ]),
+            'subscribers' => new ParticipantCollection([
+                Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+                Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+                Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+                Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
+            ]),
+            'threads' => new SubjectThreadCollection([
+                new SubjectThread([
+                    'id' => Uuid::uuid4()->toString(),
+                    'title' => 'Subject Thread #1',
+                ]),
+                new SubjectThread([
+                    'id' => Uuid::uuid4()->toString(),
+                    'title' => 'Subject Thread #2',
+                ]),
+            ]),
+            'status' => new SubjectStatusCollection([
+                SubjectStatus::status('Status', '#F9F6EE'),
+                SubjectStatus::status('Title', '#CFE1A7'),
             ])
         ]);
 
@@ -59,32 +83,36 @@ class SubjectServiceTest extends TestCase
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
             ]),
-////            'subscribers' => array(
-////                Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
-////            ),
-////            'threads' => array(
-////                new SubjectThreadCreateRequest(
-////                    [
-////                        'title' => 'Thread Title',
-////                        'avatar_url' => 'https://picsum.photos/600'
-////                    ]
-////
-////                )
-////            ),
-////            'status' => array(
-////                new SubjectStatus(
-////                    [
-////                        'title' => 'Status Title',
-////                        'color' => '#F37553'
-////                    ]
-////                )
-////            ),
+            'subscribers' => new ParticipantCollection([
+                Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+                Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+                Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+                Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
+            ]),
+            'threads' => new SubjectThreadCollection([
+                new SubjectThread([
+                    'title' => 'Subject Thread #1',
+                    'avatar_url' => 'https://picsum.photos/600'
+                ]),
+                new SubjectThread([
+                    'title' => 'Subject Thread #2',
+                    'avatar_url' => 'https://picsum.photos/600'
+                ]),
+            ]),
+            'status' => new SubjectStatusCollection([
+                SubjectStatus::status('Status', '#F9F6EE'),
+                SubjectStatus::status('Title', '#CFE1A7'),
+            ])
         ]));
 
         self::assertEquals($featureSubject->getId(), $createdSubject->getId());
         self::assertEquals($featureSubject->getTitle(), $createdSubject->getTitle());
         self::assertEquals($featureSubject->getAuthor(), $createdSubject->getAuthor());
         self::assertEquals($featureSubject->getAuthor(), $createdSubject->getAuthor());
+        self::assertEquals($featureSubject->getParticipants(), $createdSubject->getParticipants());
+        self::assertEquals($featureSubject->getSubscribers(), $createdSubject->getSubscribers());
+        self::assertEquals($featureSubject->getThreads(), $createdSubject->getThreads());
+        self::assertEquals($featureSubject->getStatus(), $createdSubject->getStatus());
 
         foreach ($container as $transaction) {
             /** @var Request $request */

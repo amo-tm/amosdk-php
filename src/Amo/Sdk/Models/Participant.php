@@ -13,8 +13,15 @@ class Participant extends AbstractModel
     protected ?string $accessListId = null;
     protected ?string $threadId = null;
 
-    static public function user(string $id): Participant
+    static public function user($identity): Participant
     {
+        $id = '';
+        if (is_a($identity, Profile::class)) {
+            $id = $identity->getId();
+        }
+        if (is_string($identity)) {
+            $id = $identity;
+        }
         return new Participant([
             'user_id' => $id,
         ]);

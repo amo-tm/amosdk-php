@@ -160,35 +160,32 @@ $newSubject = $teamService->subject()->create(new Subject([
     'title' => 'Subject Title',
     'external_link' => 'https://example.com/',
     'author' => Participant::user($createdProfile),
-    'participants' => array(
+    'participants' => new ParticipantCollection([
         Participant::user($createdProfile->getId()),
         Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
         Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
         Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
     ),
-    'subscribers' => array(
+    'subscribers' => new ParticipantCollection([
         Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
         Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
         Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
         Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
     ),
-    'threads' => array(
-        new SubjectThreadCreateRequest(
-            [
-                'title' => 'Thread Title',
-                'avatar_url' => 'https://picsum.photos/600'
-            ]
-
-        )
-    ),
-    'status' => array(
-        new SubjctStatus(
-            [
-                'title' => 'Status Title',
-                'color' => '#F37553'
-            ]
-        )
-    ),
+    'threads' => new SubjectThreadCollection([
+        new SubjectThread([
+            'title' => 'Subject Thread #1',
+            'avatar_url' => 'https://picsum.photos/600'
+        ]),
+        new SubjectThread([
+            'title' => 'Subject Thread #2',
+            'avatar_url' => 'https://picsum.photos/600'
+        ]),
+    ]),
+    'status' => new SubjectStatusCollection([
+        SubjectStatus::status('Status', '#F9F6EE'),
+        SubjectStatus::status('Title', '#CFE1A7'),
+    ])
 ]));
 
 print "subject created with id " . $newSubject->getId();

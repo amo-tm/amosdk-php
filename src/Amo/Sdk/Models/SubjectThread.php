@@ -8,7 +8,10 @@ class SubjectThread extends AbstractModel
 {
     use PrimaryKeyTrait;
 
-    protected string $id;
     protected string $title;
     protected string $avatarUrl;
+
+    public function getTitle(): string {
+        return $this->title;
+    }
 }

@@ -4,6 +4,7 @@ namespace Amo\Sdk\Service;
 
 use Amo\Sdk\AmoClient;
 use Amo\Sdk\Models\Subject;
+use Amo\Sdk\Models\SubjectCreateResponse;
 use Amo\Sdk\Service\TeamService;
 use Amo\Sdk\Traits\ServiceInitializer;
 
@@ -18,13 +19,13 @@ class SubjectService extends AbstractService
         $this->teamService = $teamService;
     }
 
-    public function create(Subject $subject): Subject
+    public function create(Subject $subject): SubjectCreateResponse
     {
         $resp = $this->teamService->apiClient->post($this->subjectUrl(), [
             'body' => $subject,
         ]);
 
-        return Subject::fromStream($resp->getBody());
+        return SubjectCreateResponse::fromStream($resp->getBody());
     }
 
     /**

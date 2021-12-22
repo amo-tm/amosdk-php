@@ -35,4 +35,9 @@ class AbstractCollectionModel extends AbstractModel
         }
         return array_values($data);
     }
+
+    public function toArray(): array
+    {
+        return $this->items;
+    }
 }
