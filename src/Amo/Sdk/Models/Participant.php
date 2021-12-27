@@ -19,6 +19,9 @@ class Participant extends AbstractModel
         if (is_a($identity, Profile::class)) {
             $id = $identity->getId();
         }
+        if (is_a($identity, User::class)) {
+            $id = $identity->getId();
+        }
         if (is_string($identity)) {
             $id = $identity;
         }

@@ -12,6 +12,7 @@ use Amo\Sdk\Models\SubjectStatusCollection;
 use Amo\Sdk\Models\SubjectThread;
 use Amo\Sdk\Models\SubjectThreadCollection;
 use Amo\Sdk\Models\Team;
+use Amo\Sdk\Models\TeamProps;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -26,7 +27,12 @@ class SubjectAPITest extends TestCase
             'baseURL' => getenv('AMO_BASE_URL'),
         ]);
 
-        $appScopedSdk = $sdk->withToken($sdk->getApplicationToken(['teams', 'profiles', 'objects_own']));
+        $appScopedSdk = $sdk->withToken($sdk->getApplicationToken([
+            'teams',
+            'profiles',
+            //токен с этим скопом не валидируется
+//            'objects_own'
+        ]));
 
         $createdTeam = $appScopedSdk->team()->create(new Team([
             'title' => 'SubjectsTeam'
@@ -39,7 +45,12 @@ class SubjectAPITest extends TestCase
             'external_id' => 'vasya1'
         ]));
 
-        $teamScopeSdk = $appScopedSdk->team($createdTeam->getId());
+        $teamScopeSdk = $appScopedSdk->team($createdTeam->getId())->scope();
+
+        $invitedUser = $teamScopeSdk->invite($createdProfile->getId(), new TeamProps([
+            'is_admin' => true,
+            'position' => 'CEO'
+        ]));
 
         $createdSubject = $teamScopeSdk->subject()->create(new Subject([
             'title' => 'Subject Title',
@@ -73,6 +84,28 @@ class SubjectAPITest extends TestCase
             ])
         ]));
 
-        print $createdSubject;
+        $subjectService = $teamScopeSdk->subject($createdSubject->getId());
+
+        $participantsAdded = $subjectService->participantsAdd(new ParticipantCollection([
+            Participant::user($invitedUser),
+        ]));
+        print 'Participant Added. Count: '.$participantsAdded->getCount().' Affected: '.$participantsAdded->getAffected()."\n";
+
+        $participantsRemoved = $subjectService->participantsRemove(new ParticipantCollection([
+            Participant::user($invitedUser),
+        ]));
+        print 'Participant removed. Count: '.$participantsRemoved->getCount().' Affected: '.$participantsRemoved->getAffected()."\n";
+
+        $subscriberAdded = $subjectService->subscribersAdd(new ParticipantCollection([
+            Participant::user($invitedUser),
+        ]));
+        print 'Subscriber Added. Count: '.$subscriberAdded->getCount().' Affected: '.$subscriberAdded->getAffected()."\n";
+
+        $subscriberRemoved = $subjectService->participantsRemove(new ParticipantCollection([
+            Participant::user($invitedUser),
+        ]));
+        print 'Subscriber removed. Count: '.$subscriberRemoved->getCount().' Affected: '.$subscriberRemoved->getAffected()."\n";
+
+
     }
 }

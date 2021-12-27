@@ -79,12 +79,18 @@ class TeamService extends AbstractService
 
     public function scope(): TeamService
     {
-        return (new TeamService())(
-            $this->apiClient->withToken(
-                $this->apiClient->getTeamAccessToken($this->teamId)
-            ),
-            $this->teamId
+        $apiClient = $this->apiClient->withToken(
+            $this->apiClient->getTeamAccessToken($this->teamId)
         );
+        return $apiClient->team($this->teamId);
+
+        //этот код выдавал ошибку: Error : Function name must be a string
+//        return (new TeamService())(
+//            $this->apiClient->withToken(
+//                $this->apiClient->getTeamAccessToken($this->teamId)
+//            ),
+//            $this->teamId
+//        );
     }
 
     public function getAccessToken(): ?AccessToken
