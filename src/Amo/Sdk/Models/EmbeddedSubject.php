@@ -2,7 +2,6 @@
 
 namespace Amo\Sdk\Models;
 
-class EmbeddedSubject extends AbstractModel
+class EmbeddedSubject extends AbstractCollectionModel
 {
-    protected ParticipantCollectionResponse $participants;
 }
