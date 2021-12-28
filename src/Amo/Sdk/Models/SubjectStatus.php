@@ -10,6 +10,22 @@ class SubjectStatus extends AbstractModel
     protected string $colorHex;
 
     /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor(): string
+    {
+        return $this->colorHex;
+    }
+
+    /**
      * @param string $title
      * @param string $colorHex
      * @return SubjectStatus

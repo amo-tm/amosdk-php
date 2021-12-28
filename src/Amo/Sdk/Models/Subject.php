@@ -13,9 +13,9 @@ class Subject extends AbstractModel
     protected string $title;
     protected string $externalLink;
     protected Participant $author;
-    protected ParticipantCollection $participants;
-    protected ParticipantCollection $subscribers;
-    protected SubjectThreadCollection $threads;
+    protected ?ParticipantCollection $participants = null;
+    protected ?ParticipantCollection $subscribers = null;
+    protected ?SubjectThreadCollection $threads = null;
     protected SubjectStatusCollection $status;
 
 

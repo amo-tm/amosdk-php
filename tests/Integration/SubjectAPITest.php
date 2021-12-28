@@ -84,6 +84,12 @@ class SubjectAPITest extends TestCase
             ])
         ]));
 
+        self::assertEquals("Subject Title", $createdSubject->getTitle());
+        self::assertEquals("https://example.com/", $createdSubject->getExternalLink());
+        self::assertEquals($createdProfile->getId(), $createdSubject->getAuthor()->getId());
+
+        print "Subject created with id: ". $createdSubject->getId()."\n";
+
         $subjectService = $teamScopeSdk->subject($createdSubject->getId());
 
         $participantsAdded = $subjectService->participantsAdd(new ParticipantCollection([
@@ -105,7 +111,5 @@ class SubjectAPITest extends TestCase
             Participant::user($invitedUser),
         ]));
         print 'Subscriber removed. Count: '.$subscriberRemoved->getCount().' Affected: '.$subscriberRemoved->getAffected()."\n";
-
-
     }
 }
