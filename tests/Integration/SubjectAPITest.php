@@ -30,8 +30,6 @@ class SubjectAPITest extends TestCase
         $appScopedSdk = $sdk->withToken($sdk->getApplicationToken([
             'teams',
             'profiles',
-            //токен с этим скопом не валидируется
-//            'objects_own'
         ]));
 
         $createdTeam = $appScopedSdk->team()->create(new Team([

@@ -151,8 +151,6 @@ $teamScopeSdk->kick($invitedUser->getId());
 ## Subject create
 
 > **REQUIRED:** TeamToken
->
-> **SCOPE:** objects_own
 
 ```php
 /** @var \Amo\Sdk\Service\TeamService $teamService */
@@ -195,8 +193,6 @@ print "subject created with id " . $newSubject->getId();
 ## Subject participants add
 
 > **REQUIRED:** TeamToken
-> 
-> **SCOPE:** objects_own
 
 ```php
 @var \Amo\Sdk\Service\SubjectService $sujectServie */
@@ -215,8 +211,6 @@ print 'count current participants: '. $participantsAddResponse->getCount();
 ## Subject participants remove
 
 > **REQUIRED:** TeamToken
->
-> **SCOPE:** objects_own
 
 ```php
 @var \Amo\Sdk\Service\SubjectService $sujectServie */
@@ -235,8 +229,6 @@ print 'count current participants: '. $participantsRemoveResponse->getCount();
 ## Subject subscribers add
 
 > **REQUIRED:** TeamToken
->
-> **SCOPE:** objects_own
 
 ```php
 @var \Amo\Sdk\Service\SubjectService $sujectServie */
@@ -255,9 +247,6 @@ print 'count current subscribers: '. $subscriberAddResponse->getCount();
 ## Subject subscribers remove
 
 > **REQUIRED:** TeamToken
->
-> **SCOPE:** objects_own
-
 ```php
 @var \Amo\Sdk\Service\SubjectService $sujectServie */
 $subscribersRemoveResponse = $sujectServie->subscribersRemove([
