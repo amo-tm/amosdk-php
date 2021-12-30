@@ -37,11 +37,15 @@ class SubjectAPITest extends TestCase
         ]));
 
 
+        print "team created with id " . $createdTeam->getId() . "\n";
+
         $createdProfile = $appScopedSdk->profile()->create(new Profile([
             'name' => 'Subject Manager',
             'email' => 'manager@mailforspam.com',
             'external_id' => 'vasya1'
         ]));
+
+        print "profile created with id " . $createdProfile->getId() . "\n";
 
         $teamScopeSdk = $appScopedSdk->team($createdTeam->getId())->scope();
 
@@ -95,19 +99,19 @@ class SubjectAPITest extends TestCase
         ]));
         print 'Participant Added. Count: '.$participantsAdded->getCount().' Affected: '.$participantsAdded->getAffected()."\n";
 
-        $participantsRemoved = $subjectService->participantsRemove(new ParticipantCollection([
-            Participant::user($invitedUser),
-        ]));
-        print 'Participant removed. Count: '.$participantsRemoved->getCount().' Affected: '.$participantsRemoved->getAffected()."\n";
+//        $participantsRemoved = $subjectService->participantsRemove(new ParticipantCollection([
+//            Participant::user($invitedUser),
+//        ]));
+//        print 'Participant removed. Count: '.$participantsRemoved->getCount().' Affected: '.$participantsRemoved->getAffected()."\n";
 
         $subscriberAdded = $subjectService->subscribersAdd(new ParticipantCollection([
             Participant::user($invitedUser),
         ]));
         print 'Subscriber Added. Count: '.$subscriberAdded->getCount().' Affected: '.$subscriberAdded->getAffected()."\n";
 
-        $subscriberRemoved = $subjectService->participantsRemove(new ParticipantCollection([
-            Participant::user($invitedUser),
-        ]));
-        print 'Subscriber removed. Count: '.$subscriberRemoved->getCount().' Affected: '.$subscriberRemoved->getAffected()."\n";
+//        $subscriberRemoved = $subjectService->participantsRemove(new ParticipantCollection([
+//            Participant::user($invitedUser),
+//        ]));
+//        print 'Subscriber removed. Count: '.$subscriberRemoved->getCount().' Affected: '.$subscriberRemoved->getAffected()."\n";
     }
 }
