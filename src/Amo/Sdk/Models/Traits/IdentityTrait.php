@@ -6,7 +6,7 @@ trait IdentityTrait
 {
     use PrimaryKeyTrait;
 
-    protected string $type;
+    protected ?string $type = '';
 
     /**
      * @return string

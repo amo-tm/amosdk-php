@@ -6,6 +6,7 @@ use Amo\Sdk\OAuth2\Provider\AmoProvider;
 use Amo\Sdk\Service\MessagesService;
 use Amo\Sdk\Service\ProfileService;
 use Amo\Sdk\Service\TeamService;
+use Amo\Sdk\Traits\ServiceInitializer;
 use DateTimeImmutable;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
@@ -24,6 +25,7 @@ use Ramsey\Uuid\Uuid;
  */
 class AmoClient
 {
+    use ServiceInitializer;
     /**
      *
      */
@@ -257,23 +259,6 @@ class AmoClient
         }
 
         return $baseURL . '/' . ltrim($url, '/');
-    }
-
-    /**
-     * @param $method
-     * @param $arguments
-     * @return false|mixed
-     */
-    public function __call($method, $arguments)
-    {
-        $serviceClassName = '\\Amo\\Sdk\\Service\\' . ucfirst($method) . 'Service';
-        if (!class_exists($serviceClassName)) {
-            throw new \BadMethodCallException(
-                'Call to undefined method ' . get_class($this) . '::' . $method . '()'
-            );
-        }
-
-        return call_user_func_array([new $serviceClassName(), '__invoke'], array_merge([$this], $arguments));
     }
 
     /**

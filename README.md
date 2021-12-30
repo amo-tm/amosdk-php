@@ -66,7 +66,7 @@ $sdk = new AmoClient([
     'clientSecret' => 'your_client_secret',
 ]);
 
-$appScopedSdk = $sdk->withToken($sdk->getApplicationToken())
+$appScopedSdk = $sdk->withToken($sdk->getApplicationToken(['teams', 'profiles']))
 // store token in database
 ```
 
@@ -85,7 +85,7 @@ $sdk = new AmoClient([
     'clientSecret' => 'your_client_secret',
 ]);
 
-$appScopedSdk = $sdk->withToken($sdk->getApplicationToken())
+$appScopedSdk = $sdk->withToken($sdk->getApplicationToken(['teams', 'profiles']))
 $newTeam = $appScopedSdk->team()->create(new Team([
     'title' => 'testTeamName'
 ]))
@@ -108,7 +108,7 @@ $sdk = new AmoClient([
     'clientSecret' => 'your_client_secret',
 ]);
 
-$appScopedSdk = $sdk->withToken($sdk->getApplicationToken())
+$appScopedSdk = $sdk->withToken($sdk->getApplicationToken(['teams', 'profiles']))
 $createdProfile = $appScopedSdk->profile()->create(new Profile([
     'name' => 'Tim',
     'email' => 'tim@domain.com',
@@ -144,6 +144,121 @@ $invitedUser = $teamService->invite($createdProfile->getId(), new TeamProps([
 > **SCOPE:** profiles,teams
 
 ```php
-/** @var \Amo\Sdk\Service\TeamService $teamScopeSdk */
-$teamScopeSdk->kick($invitedUser->getId());
+/** @var \Amo\Sdk\Service\TeamService $teamService */
+$teamService->kick($invitedUser->getId());
+```
+
+## Subject create
+
+> **REQUIRED:** TeamToken
+
+```php
+/** @var \Amo\Sdk\Service\TeamService $teamService */
+$subjectService = $teamService->subject();
+$newSubject = $subjectService->create(new Subject([
+    'title' => 'Subject Title',
+    'external_link' => 'https://example.com/',
+    'author' => Participant::user($createdProfile),
+    'participants' => new ParticipantCollection([
+        Participant::user($createdProfile->getId()),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    ),
+    'subscribers' => new ParticipantCollection([
+        Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    ),
+    'threads' => new SubjectThreadCollection([
+        new SubjectThread([
+            'title' => 'Subject Thread #1',
+            'avatar_url' => 'https://picsum.photos/600'
+        ]),
+        new SubjectThread([
+            'title' => 'Subject Thread #2',
+            'avatar_url' => 'https://picsum.photos/600'
+        ]),
+    ]),
+    'status' => new SubjectStatusCollection([
+        SubjectStatus::status('Status', '#F9F6EE'),
+        SubjectStatus::status('Title', '#CFE1A7'),
+    ])
+]));
+
+print "subject created with id " . $newSubject->getId();
+```
+
+## Subject participants add
+
+> **REQUIRED:** TeamToken
+
+```php
+@var \Amo\Sdk\Service\TeamService $teamService */
+$subjectService = $teamService->subject($createdSubject->getId());
+
+$participantsAddResponse = $subjectServie->participantsAdd([
+    new ParticipantCollection(
+        Participant::user('d31f3f74-6fc0-41ae-b2f9-42eccd4f80b8'),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    )
+]);
+
+print 'count current participants: '. $participantsAddResponse->getCount();
+```
+
+## Subject participants remove
+
+> **REQUIRED:** TeamToken
+
+```php
+@var \Amo\Sdk\Service\SubjectService $subjectService */
+$participantsRemoveResponse = $subjectService->participantsRemove([
+    new ParticipantCollection(
+        Participant::user('d31f3f74-6fc0-41ae-b2f9-42eccd4f80b8'),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    )
+]);
+
+print 'count current participants: '. $participantsRemoveResponse->getCount();
+```
+
+## Subject subscribers add
+
+> **REQUIRED:** TeamToken
+
+```php
+@var \Amo\Sdk\Service\SubjectService $subjectService */
+$subscriberAddResponse = $subjectService->subscribersAdd([
+    new ParticipantCollection(
+        Participant::user('d31f3f74-6fc0-41ae-b2f9-42eccd4f80b8'),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    )
+]);
+
+print 'count current subscribers: '. $subscriberAddResponse->getCount();
+```
+
+## Subject subscribers remove
+
+> **REQUIRED:** TeamToken
+```php
+@var \Amo\Sdk\Service\SubjectService $subjectService */
+$subscribersRemoveResponse = $subjectService->subscribersRemove([
+    new ParticipantCollection(
+        Participant::user('d31f3f74-6fc0-41ae-b2f9-42eccd4f80b8'),
+        Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
+        Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
+        Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
+    )
+]);
+
+print 'count current subscribers: '. $subscribersRemoveResponse->getCount();
 ```
