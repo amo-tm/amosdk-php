@@ -292,4 +292,8 @@ class AmoClient
     {
         return $this->accessToken;
     }
+
+    public function getClientSecret(): ?string {
+        return $this->initialOptions['clientSecret'] ?? null;
+    }
 }

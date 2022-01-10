@@ -109,6 +109,8 @@ class SubjectAPITest extends TestCase
         ]));
         print 'Subscriber Added. Count: '.$subscriberAdded->getCount().' Affected: '.$subscriberAdded->getAffected()."\n";
 
+        print 'Subject embedded user secret: ' . $subjectService->embedUserToken($createdProfile) . "\n";
+
 //        $subscriberRemoved = $subjectService->participantsRemove(new ParticipantCollection([
 //            Participant::user($invitedUser),
 //        ]));

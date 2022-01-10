@@ -3,10 +3,12 @@
 namespace Amo\Sdk\Service;
 
 use Amo\Sdk\AmoClient;
+use Amo\Sdk\Models\Participant;
 use Amo\Sdk\Models\ParticipantCollection;
 use Amo\Sdk\Models\Subject;
 use Amo\Sdk\Models\SubjectCreateResponse;
 use Amo\Sdk\Models\SubjectParticipantsResponse;
+use Amo\Sdk\Models\User;
 use Amo\Sdk\Service\TeamService;
 use Amo\Sdk\Traits\ServiceInitializer;
 
@@ -106,5 +108,30 @@ class SubjectService extends AbstractService
         }
 
         return $url;
+    }
+
+    /**
+     * @var Participant|User|string $user
+     */
+    public function embedUserToken($user): string {
+        if ($user instanceof Participant) {
+            $userId = $user->getId();
+        } else if ($user instanceof User) {
+            $userId = $user->getId();
+        } else {
+            $userId = $user;
+        }
+
+        $signatureBody = implode(':', [
+            $this->teamService->getTeamId(),
+            $userId,
+            $this->subjectId,
+        ]);
+
+        return hash_hmac(
+            'sha256',
+            $signatureBody,
+            $this->teamService->apiClient->getClientSecret(),
+        );
     }
 }

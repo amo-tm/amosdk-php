@@ -97,4 +97,12 @@ class TeamService extends AbstractService
     {
         return $this->apiClient->getAccessToken();
     }
+
+    /**
+     * @return string|null
+     */
+    public function getTeamId(): ?string
+    {
+        return $this->teamId;
+    }
 }
