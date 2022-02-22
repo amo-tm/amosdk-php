@@ -1,31 +1,38 @@
 <?php
 
-namespace Amo\Sdk\Service;
+namespace Amo\Sdk\Service\v1_0;
 
-use Amo\Sdk\Models\MessagePostRequest;
-use Amo\Sdk\Models\Messages\Message;
+use Amo\Sdk\Models\v1_0\AccessList;
+use Amo\Sdk\Service\AbstractService;
+use Amo\Sdk\Service\TeamService;
 
-class MessagesService extends AbstractService
+class AccessListService extends AbstractService
 {
-    protected ?string $messageId;
+    protected ?string $accessListId;
     protected TeamService $teamService;
 
-    public function factory(TeamService $teamService)
+    public function factory(TeamService $teamService, string $accessListId = null)
     {
+        $this->accessListId = $accessListId;
         $this->teamService = $teamService;
         $this->apiClient = $teamService->apiClient;
     }
 
-    public function send(MessagePostRequest $messagePostRequest): Message {
+    public function create(AccessList $accessList): AccessList
+    {
         $resp = $this->teamService->apiClient->post(
             $this->getUrl(),
             [
-                'body' => $messagePostRequest,
+                'body' => $accessList,
+                'version' => 'v1.0'
             ]
         );
-        return Message::fromStream($resp->getBody());
+        return AccessList::fromStream($resp->getBody());
     }
 
+    /**
+     * @return string
+     */
     private function getUrl($location = ''): string
     {
         if (is_array($location)) {
@@ -36,7 +43,11 @@ class MessagesService extends AbstractService
             throw new \RuntimeException('TeamService not passed. Please, use sdk->team(..)->accessList()');
         }
 
-        $url = '/messages';
+        $url = '/access_lists';
+
+        if ($this->accessListId) {
+            $url .= '/' . $this->accessListId;
+        }
 
         if ($location != '') {
             $url .= '/' . ltrim($location, '/');

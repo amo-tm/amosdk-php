@@ -7,11 +7,14 @@ use Psr\Http\Message\StreamInterface;
 
 abstract class AbstractModel
 {
+    protected array $_embedded = [];
+    private array $embeddedData = [];
     protected array $cast = [];
 
     protected array $forceHidden = [
         'cast',
-        'forceHidden'
+        'forceHidden',
+        '_embedded'
     ];
 
     protected array $hidden = [];
@@ -113,6 +116,10 @@ abstract class AbstractModel
     protected function setData(array $data)
     {
         foreach ($data as $key => $value) {
+            if ($key === '_embedded') {
+                $this->setEmbedded($value);
+                continue;
+            }
             $camelKey = $this->toCamel($key);
             if ($this->isPropertyExists($camelKey)) {
                 $propType = $this->cast[$camelKey] ?? null;
@@ -126,6 +133,31 @@ abstract class AbstractModel
                     }
                 } else {
                     $this->setProperty($camelKey, $value);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $source
+     * @return mixed|null
+     */
+    public function getEmbedded(string $source) {
+        return $this->embeddedData[$this->toCamel($source)] ?? null;
+    }
+
+    private function setEmbedded($data)
+    {
+        foreach ($data as $key => $value) {
+            $camelKey = $this->toCamel($key);
+            $propType = $this->_embedded[$camelKey] ?? null;
+            if ($propType) {
+                if (class_exists($propType)) {
+                    if ($value instanceof $propType) {
+                        $this->embeddedData[$camelKey] = $value;
+                    } else {
+                        $this->embeddedData[$camelKey] = new $propType($value);
+                    }
                 }
             }
         }

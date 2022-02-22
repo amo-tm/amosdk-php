@@ -6,6 +6,7 @@ use Amo\Sdk\AmoClient;
 use Amo\Sdk\Models\Participant;
 use Amo\Sdk\Models\ParticipantCollection;
 use Amo\Sdk\Models\Subject;
+use Amo\Sdk\Models\SubjectCreateRequest;
 use Amo\Sdk\Models\SubjectCreateResponse;
 use Amo\Sdk\Models\SubjectParticipantsResponse;
 use Amo\Sdk\Models\User;
@@ -21,6 +22,7 @@ class SubjectService extends AbstractService
     {
         $this->subjectId = $subjectId;
         $this->teamService = $teamService;
+        $this->apiClient = $teamService->apiClient;
     }
 
     public function subscribersRemove(ParticipantCollection $participants): SubjectParticipantsResponse {
@@ -75,7 +77,7 @@ class SubjectService extends AbstractService
      * @return SubjectCreateResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function create(Subject $subject): SubjectCreateResponse
+    public function create(SubjectCreateRequest $subject): SubjectCreateResponse
     {
         $resp = $this->teamService->apiClient->post($this->subjectUrl(), [
             'body' => $subject,

@@ -4,11 +4,13 @@ namespace Amo\Sdk\Models\Messages;
 
 use Amo\Sdk\Models\AbstractModel;
 use Amo\Sdk\Models\Participant;
+use Amo\Sdk\Models\Traits\IdentityTrait;
 use Carbon\Carbon;
 
 class Message extends AbstractModel
 {
-    protected string $id;
+    use IdentityTrait;
+
     protected ?Participant $author;
     protected ?Participant $receiver;
     protected string $text;
@@ -26,20 +28,54 @@ class Message extends AbstractModel
 
     protected MessageRef $replyTo;
 
+    static public function text(string $text): Message {
+        return new Message([
+            'text' => $text
+        ]);
+    }
+
+    public function setAuthor(?Participant $author): self
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    public function setReceiver(?Participant $receiver): self
+    {
+        $this->receiver = $receiver;
+        return $this;
+    }
+
+    public function setText(string $text): self
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    public function setAttachments(array $attachments): self
+    {
+        $this->attachments = $attachments;
+        return $this;
+    }
+
+    public function setReplyMarkup(ReplyMarkup $replyMarkup): self
+    {
+        $this->replyMarkup = $replyMarkup;
+        return $this;
+    }
+
+    public function setReplyTo(MessageRef $replyTo): self
+    {
+        $this->replyTo = $replyTo;
+        return $this;
+    }
+
     /**
      * @return Participant|null
      */
     public function getAuthor(): ?Participant
     {
         return $this->author;
-    }
-
-    /**
-     * @param Participant|null $author
-     */
-    public function setAuthor(?Participant $author): void
-    {
-        $this->author = $author;
     }
 
     /**
@@ -51,27 +87,11 @@ class Message extends AbstractModel
     }
 
     /**
-     * @param Participant|null $receiver
-     */
-    public function setReceiver(?Participant $receiver): void
-    {
-        $this->receiver = $receiver;
-    }
-
-    /**
      * @return string
      */
     public function getText(): string
     {
         return $this->text;
-    }
-
-    /**
-     * @param string $text
-     */
-    public function setText(string $text): void
-    {
-        $this->text = $text;
     }
 
     /**
@@ -83,43 +103,18 @@ class Message extends AbstractModel
     }
 
     /**
-     * @param AttachmentInterface[] $attachments
-     */
-    public function setAttachments(array $attachments): void
-    {
-        $this->attachments = $attachments;
-    }
-
-    /**
      * @return Carbon
      */
     public function getCreatedAt(): Carbon
     {
         return $this->createdAt;
     }
-
-    /**
-     * @param Carbon $createdAt
-     */
-    public function setCreatedAt(Carbon $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
     /**
      * @return Carbon
      */
     public function getUpdatedAt(): Carbon
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * @param Carbon $updatedAt
-     */
-    public function setUpdatedAt(Carbon $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -131,26 +126,10 @@ class Message extends AbstractModel
     }
 
     /**
-     * @param ReplyMarkup $replyMarkup
-     */
-    public function setReplyMarkup(ReplyMarkup $replyMarkup): void
-    {
-        $this->replyMarkup = $replyMarkup;
-    }
-
-    /**
      * @return MessageRef
      */
     public function getReplyTo(): MessageRef
     {
         return $this->replyTo;
-    }
-
-    /**
-     * @param MessageRef $replyTo
-     */
-    public function setReplyTo(MessageRef $replyTo): void
-    {
-        $this->replyTo = $replyTo;
     }
 }

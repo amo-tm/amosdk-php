@@ -7,30 +7,12 @@ use Amo\Sdk\Models\SubjectThread;
 
 class SubjectCreateResponse extends Subject
 {
-    protected ?array $embedded = array();
-    protected ?array $threadArray = array();
+    protected array $_embedded = [
+        'threads' => SubjectThreadCollection::class
+    ];
 
-    public function getThreads(): array
+    public function getThreads(): ?SubjectThreadCollection
     {
-        if (!empty($this->threadArray)) {
-            return $this->threadArray;
-        }
-
-        if ((array_key_exists("threads", $this->embedded))
-            and (array_key_exists("_embedded", $this->embedded["threads"]))
-            and (array_key_exists("threads", $this->embedded["threads"]["_embedded"]))
-        ) {
-            $threads =  array();
-            foreach ($this->embedded["threads"]["_embedded"]["threads"] as $thread) {
-                array_push($threads, new SubjectThread([
-                    "title" => $thread["_embedded"]["thread"]["title"],
-                    "id" => $thread["_embedded"]["thread"]["id"]
-                ]));
-//                print $thread["_embedded"]["thread"]["title"]."\n";
-            }
-            $this->threadArray = $threads;
-            return $threads;
-        }
-        return array();
+        return $this->getEmbedded('threads');
     }
 }

@@ -4,3 +4,4 @@ vendor
 build/
 .phpunit.result.cache
 composer.phar
+tests/**/*DraftTest.php

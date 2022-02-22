@@ -11,7 +11,11 @@ trait ServiceInitializer
      */
     public function __call($method, $arguments)
     {
-        $serviceClassName = '\\Amo\\Sdk\\Service\\' . ucfirst($method) . 'Service';
+        $version = $this->versionMapper[lcfirst($method)]
+            ? $this->versionMapper[lcfirst($method)] . '\\'
+            : '';
+
+        $serviceClassName = '\\Amo\\Sdk\\Service\\' . $version . ucfirst($method) . 'Service';
         if (!class_exists($serviceClassName)) {
             throw new \BadMethodCallException(
                 'Call to undefined method ' . get_class($this) . '::' . $method . '()'

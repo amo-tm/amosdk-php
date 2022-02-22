@@ -15,7 +15,6 @@ class Subject extends AbstractModel
     protected Participant $author;
     protected ?ParticipantCollection $participants = null;
     protected ?ParticipantCollection $subscribers = null;
-    protected ?SubjectThreadCollection $threads = null;
     protected SubjectStatusCollection $status;
 
 
@@ -23,7 +22,6 @@ class Subject extends AbstractModel
         'author' => Participant::class,
         'participants' => ParticipantCollection::class,
         'subscribers' => ParticipantCollection::class,
-        'threads' => SubjectThreadCollection::class,
         'status' => SubjectStatusCollection::class,
     ];
 
@@ -33,14 +31,6 @@ class Subject extends AbstractModel
     public function getStatus(): array
     {
         return $this->status->toArray();
-    }
-
-    /**
-     * @return array
-     */
-    public function getThreads(): array
-    {
-        return $this->threads->toArray();
     }
 
     /**

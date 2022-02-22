@@ -7,16 +7,22 @@ use Amo\Sdk\Models\FreeModel;
 use Amo\Sdk\Models\Team;
 use Amo\Sdk\Models\TeamProps;
 use Amo\Sdk\Models\User;
-use Amo\Sdk\Service\SubjectService;
+use Amo\Sdk\Service\v1_0\AccessListService;
 use Amo\Sdk\Traits\ServiceInitializer;
 use League\OAuth2\Client\Token\AccessToken;
 
 /**
  * @method SubjectService subject(string $subjectId = null)
+ * @method AccessListService accessList(string $subjectId = null)
+ * @method MessagesService messages()
  */
 class TeamService extends AbstractService
 {
     use ServiceInitializer;
+
+    protected array $versionMapper = [
+        'accessList' => 'v1_0'
+    ];
 
     protected ?string $teamId;
 
