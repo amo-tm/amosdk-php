@@ -15,7 +15,7 @@ PHP 7.4.0 and later.
 You can install the sdk via [Composer](http://getcomposer.org/). Run the following command:
 
 ```bash
-composer require amo-tm/amosdk-php:v1.0.0-BETA
+composer require amo-tm/amosdk-php:"^v1.3@beta
 ```
 
 To use the sdk, use Composer's [autoload](https://getcomposer.org/doc/01-basic-usage.md#autoloading):
