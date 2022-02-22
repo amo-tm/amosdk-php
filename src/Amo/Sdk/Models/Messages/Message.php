@@ -15,10 +15,7 @@ class Message extends AbstractModel
     protected ?Participant $receiver;
     protected string $text;
 
-    /**
-     * @var AttachmentInterface[]
-     */
-    protected array $attachments;
+    protected ?AttachmentCollection $attachments;
 
     protected Carbon $createdAt;
 
@@ -52,7 +49,7 @@ class Message extends AbstractModel
         return $this;
     }
 
-    public function setAttachments(array $attachments): self
+    public function setAttachments(AttachmentCollection $attachments): self
     {
         $this->attachments = $attachments;
         return $this;
