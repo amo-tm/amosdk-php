@@ -15,7 +15,7 @@
     "ext-json": "*",
     "nesbot/carbon": "2.*",
     "guzzlehttp/guzzle": "^6.0 || ^7.0",
-    "ramsey/uuid": "4.2.*",
+    "ramsey/uuid": "^4.2 || ^4.3",
     "lcobucci/jwt": "4.1.5"
   },
   "require-dev": {
