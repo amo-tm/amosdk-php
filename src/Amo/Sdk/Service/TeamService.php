@@ -15,6 +15,7 @@ use League\OAuth2\Client\Token\AccessToken;
  * @method SubjectService subject(string $subjectId = null)
  * @method AccessListService accessList(string $subjectId = null)
  * @method MessagesService messages()
+ * @method BotsService bots(string $bolId)
  */
 class TeamService extends AbstractService
 {

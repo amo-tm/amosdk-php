@@ -11,9 +11,12 @@ trait ServiceInitializer
      */
     public function __call($method, $arguments)
     {
-        $version = $this->versionMapper[lcfirst($method)]
-            ? $this->versionMapper[lcfirst($method)] . '\\'
-            : '';
+        $version = property_exists($this, 'versionMapper') ?
+            (
+                $this->versionMapper[lcfirst($method)] ?? null
+                    ? $this->versionMapper[lcfirst($method)] . '\\'
+                    : ''
+            ) : '';
 
         $serviceClassName = '\\Amo\\Sdk\\Service\\' . $version . ucfirst($method) . 'Service';
         if (!class_exists($serviceClassName)) {

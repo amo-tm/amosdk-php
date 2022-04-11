@@ -6,6 +6,7 @@ use Amo\Sdk\OAuth2\Provider\AmoProvider;
 use Amo\Sdk\Service\MessagesService;
 use Amo\Sdk\Service\ProfileService;
 use Amo\Sdk\Service\TeamService;
+use Amo\Sdk\Service\WebhookService;
 use Amo\Sdk\Traits\ServiceInitializer;
 use DateTimeImmutable;
 use Lcobucci\JWT\Configuration;
@@ -22,6 +23,7 @@ use Ramsey\Uuid\Uuid;
  * @method MessagesService messages()
  * @method TeamService team(string $teamId = null)
  * @method ProfileService profile(string $profileId = null)
+ * @method WebhookService webhook()
  */
 class AmoClient
 {
@@ -116,6 +118,10 @@ class AmoClient
         $options['code'] = $code;
         $this->accessToken = $this->provider->getAccessToken('authorization_code', $options);
         return $this->accessToken;
+    }
+
+    public function oauthProvider(): AmoProvider {
+        return $this->provider;
     }
 
     /**
