@@ -5,7 +5,7 @@ namespace Amo\Sdk\Models\Webhook;
 use Amo\Sdk\Models\AbstractModel;
 use Amo\Sdk\Models\RPA\Request;
 
-class WebhookRpaBotControlTransferred extends AbstractModel
+class WebhookRpaBotControlTransferred extends AbstractModel implements Interfaces\WebhookWidgetEvent
 {
     protected array $_embedded = [
         'request' => Request::class

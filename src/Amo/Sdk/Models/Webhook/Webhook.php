@@ -37,6 +37,10 @@ class Webhook extends AbstractModel
         return $this->getEmbedded('context');
     }
 
+    public function getWebhookEvent(): Interfaces\WebhookEvent {
+        return $this->getEmbedded($this->getEventType());
+    }
+
     protected string $eventId;
     protected string $eventType;
     protected Carbon $eventTime;
