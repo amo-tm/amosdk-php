@@ -13,6 +13,10 @@ class Request extends AbstractModel
     protected ?string $externalId = null;
     protected ?RequestFieldsValues $fieldValues = null;
 
+    protected array $cast = [
+        'fieldValues' => RequestFieldsValues::class
+    ];
+
     public static function withId(string $id): Request {
         return new Request(['id' => $id]);
     }
