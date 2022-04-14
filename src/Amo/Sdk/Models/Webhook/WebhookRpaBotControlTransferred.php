@@ -11,6 +11,10 @@ class WebhookRpaBotControlTransferred extends AbstractModel implements Interface
         'request' => Request::class
     ];
 
+    protected string $widgetId;
+    protected string $botId;
+    protected ?array  $inputValues;
+
     /**
      * @return string
      */
@@ -26,9 +30,6 @@ class WebhookRpaBotControlTransferred extends AbstractModel implements Interface
     {
         return $this->botId;
     }
-    protected string $widgetId;
-    protected string $botId;
-    protected ?array  $inputValues;
 
     public function getRequest(): Request {
         return $this->getEmbedded('request');

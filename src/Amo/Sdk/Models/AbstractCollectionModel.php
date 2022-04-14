@@ -4,6 +4,8 @@ namespace Amo\Sdk\Models;
 
 class AbstractCollectionModel extends AbstractModel implements \Iterator, \ArrayAccess
 {
+    const COLLECTION_TYPE_ARRAY = 1;
+    const COLLECTION_TYPE_MAP = 2;
     /**
      * @var AbstractModel[]
      */
@@ -11,17 +13,25 @@ class AbstractCollectionModel extends AbstractModel implements \Iterator, \Array
 
     protected string $itemClass = AbstractModel::class;
 
+    protected int $collectionType = self::COLLECTION_TYPE_ARRAY;
+
     protected function setData(array $data)
     {
         if (!is_array($data)) {
             throw new \InvalidArgumentException('data must be array of models');
         }
 
-        foreach ($data as $item) {
+        foreach ($data as $key => $item) {
             if ($item instanceof $this->itemClass) {
-                $this->items[] = $item;
+                $itemValue = $item;
             } else {
-                $this->items[] = new $this->itemClass($item);
+                $itemValue = new $this->itemClass($item);
+            }
+
+            if ($this->collectionType === self::COLLECTION_TYPE_ARRAY) {
+                $this->items[] = $itemValue;
+            } else if ($this->collectionType === self::COLLECTION_TYPE_MAP) {
+                $this->items[$key] = $itemValue;
             }
         }
     }
@@ -30,10 +40,10 @@ class AbstractCollectionModel extends AbstractModel implements \Iterator, \Array
     protected function toApi(): array
     {
         $data = [];
-        foreach ($this->items as $item) {
-            $data[] = $item->toApi();
+        foreach ($this->items as $key => $item) {
+            $data[$key] = $item->toApi();
         }
-        return array_values($data);
+        return $data;
     }
 
     public function toArray(): array

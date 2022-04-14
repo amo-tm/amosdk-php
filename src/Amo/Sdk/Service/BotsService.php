@@ -3,6 +3,7 @@
 namespace Amo\Sdk\Service;
 
 use Amo\Sdk\Models\RPA\BotReturnControlRequest;
+use Amo\Sdk\Models\RPA\Request;
 
 class BotsService extends AbstractService
 {
@@ -40,5 +41,15 @@ class BotsService extends AbstractService
         }
 
         return $url;
+    }
+
+    public function updateRequest(Request $request): Request {
+        $response = $this->apiClient->put(
+            $this->getRequestUrl($request->getId()),
+            [
+                'body' => $request
+            ]
+        );
+        return Request::fromStream($response->getBody());
     }
 }

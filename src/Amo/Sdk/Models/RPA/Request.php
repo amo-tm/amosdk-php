@@ -6,6 +6,25 @@ use Amo\Sdk\Models\AbstractModel;
 
 class Request extends AbstractModel
 {
+    protected string $id;
+    protected string $statusId;
+    protected string $title;
+    protected string $authorId;
+    protected ?string $externalId = null;
+    protected ?RequestFieldsValues $fieldValues = null;
+
+    public static function withId(string $id): Request {
+        return new Request(['id' => $id]);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getExternalId(): ?string
+    {
+        return $this->externalId;
+    }
+
     /**
      * @return string
      */
@@ -38,8 +57,22 @@ class Request extends AbstractModel
         return $this->authorId;
     }
 
-    protected string $id;
-    protected string $statusId;
-    protected string $title;
-    protected string $authorId;
+    /**
+     * @return RequestFieldsValues
+     */
+    public function getFieldValues(): RequestFieldsValues
+    {
+        return $this->fieldValues;
+    }
+
+    public function getFieldValue(string $fieldId): ?RequestFieldValue {
+        return $this->fieldValues->getValue($fieldId);
+    }
+
+    public function setFieldValue(string $fieldId, ?RequestFieldValue $value): void {
+        if (is_null($this->fieldValues)) {
+            $this->fieldValues = new RequestFieldsValues([]);
+        }
+        $this->fieldValues->setValue($fieldId, $value);
+    }
 }
