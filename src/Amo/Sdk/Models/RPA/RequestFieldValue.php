@@ -12,6 +12,54 @@ class RequestFieldValue extends AbstractModel
      * @var string[]|null
      */
     protected ?array $enumId;
+
+    /**
+     * @return string|null
+     */
+    public function getString(): ?string
+    {
+        return $this->string;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getEnumId(): ?array
+    {
+        return $this->enumId;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getFloat(): ?float
+    {
+        return $this->float;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getInt(): ?int
+    {
+        return $this->int;
+    }
+
+    /**
+     * @return ParticipantCollection|null
+     */
+    public function getUsers(): ?ParticipantCollection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @return int[]|null
+     */
+    public function getIntRange(): ?array
+    {
+        return $this->int_range;
+    }
     protected ?float $float;
     protected ?int $int;
     protected ?ParticipantCollection $users;
