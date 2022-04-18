@@ -12,10 +12,10 @@ use Amo\Sdk\Traits\ServiceInitializer;
 use League\OAuth2\Client\Token\AccessToken;
 
 /**
- * @method SubjectService subject(string $subjectId = null)
- * @method AccessListService accessList(string $subjectId = null)
+ * @method SubjectService subject(?string $subjectId = null)
+ * @method AccessListService accessList(?string $subjectId = null)
  * @method MessagesService messages()
- * @method BotsService bots(string $bolId)
+ * @method BotsService bots(?string $bolId = null)
  */
 class TeamService extends AbstractService
 {
