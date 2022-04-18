@@ -7,4 +7,5 @@ use Amo\Sdk\Models\AbstractModel;
 class BotRunParams extends AbstractModel
 {
     protected ?string $externalId = null;
+    protected ?string $userId = null;
 }

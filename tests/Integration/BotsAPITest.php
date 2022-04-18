@@ -7,7 +7,7 @@ use Amo\Sdk\Models\RPA\BotRunParams;
 use Amo\Sdk\Service\TeamService;
 use League\OAuth2\Client\Token\AccessToken;
 use PHPUnit\Framework\Assert;
-use Tests\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class BotsAPITest extends TestCase
 {
@@ -24,7 +24,7 @@ class BotsAPITest extends TestCase
         ]);
 
         $this->teamService = $this->sdk
-            ->withToken(new AccessToken(getenv('AMO_TEST_TEAM_TOKEN')))
+            ->withToken(new AccessToken(json_decode(getenv('AMO_TEST_TEAM_TOKEN'), true)))
             ->team(getenv('AMO_TEST_TEAM_ID'));
     }
 
@@ -33,7 +33,8 @@ class BotsAPITest extends TestCase
         $botList = $botService->get();
         Assert::assertNotEquals(0, $botList->getCount());
         $request = $botService->use($botList->getItems()[0]->getId())->run(new BotRunParams([
-            'external_id' => 'leads:213123213'
+            'external_id' => 'leads:213123213',
+            'user_id' => '8694a340-b73d-11ec-862e-02420a000132'
         ]));
         Assert::assertEquals($request->getExternalId(), 'leads:213123213');
     }

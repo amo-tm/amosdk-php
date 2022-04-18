@@ -75,7 +75,7 @@ class BotsService extends AbstractService
 
     public function run(BotRunParams $runParams): Request {
         $response = $this->apiClient->post(
-            $this->getUrl(),
+            $this->getUrl('run'),
             [
                 'body' => $runParams
             ]
