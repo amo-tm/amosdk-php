@@ -94,4 +94,10 @@ class RequestFieldValue extends AbstractModel
             'string' => $v
         ]);
     }
+
+    public static function int(int $v): RequestFieldValue {
+        return new RequestFieldValue([
+            'int' => $v
+        ]);
+    }
 }
