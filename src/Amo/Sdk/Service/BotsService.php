@@ -30,26 +30,24 @@ class BotsService extends AbstractService
         );
     }
 
-    private function getRequestUrl(string $requestId, $location = ''): string
+    private function getRequestUrl(string $requestId, $location = null): string
     {
         return $this->getUrl(array_merge(
             ['request', $requestId],
-            (array)$location)
-        );
+            (array)$location
+        ));
     }
 
-    private function getUrl($location = ''): string
+    private function getUrl($location = null): string
     {
-        if (is_array($location)) {
-            $location = implode('/', $location);
-        }
+        $location = implode('/', (array)$location);
 
         $url = '/bots';
         if ($this->botId) {
             $url .= '/' . $this->botId;
         }
 
-        if ($location != '') {
+        if ($location) {
             $url .= '/' . ltrim($location, '/');
         }
 
@@ -75,7 +73,7 @@ class BotsService extends AbstractService
 
     public function run(BotRunParams $runParams): Request {
         $response = $this->apiClient->post(
-            $this->getUrl('run'),
+            $this->getUrl(),
             [
                 'body' => $runParams
             ]
