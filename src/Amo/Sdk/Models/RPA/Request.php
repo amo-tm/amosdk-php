@@ -17,6 +17,11 @@ class Request extends AbstractModel
         'fieldValues' => RequestFieldsValues::class
     ];
 
+    protected array $_embedded = [
+        'fields' => FieldsListCollection::class,
+        'statuses' => StatusesListCollection::class,
+    ];
+
     public static function withId(string $id): Request {
         return new Request(['id' => $id]);
     }
