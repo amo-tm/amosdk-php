@@ -9,6 +9,7 @@ class Request extends AbstractModel
     protected string $id;
     protected string $statusId;
     protected string $title;
+    protected string $seqId;
     protected string $authorId;
     protected ?string $externalId = null;
     protected ?RequestFieldsValues $fieldValues = null;
@@ -32,6 +33,14 @@ class Request extends AbstractModel
     public function getExternalId(): ?string
     {
         return $this->externalId;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSeqId(): ?string
+    {
+        return $this->seqId;
     }
 
     /**
