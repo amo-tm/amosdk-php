@@ -3,7 +3,7 @@
 namespace Unit\Amo\Sdk\Service;
 
 use Amo\Sdk\AmoClient;
-use Amo\Sdk\Models\ParticipantCollection;
+use Amo\Sdk\Models\UserCollection;
 use Amo\Sdk\Models\Subject;
 use Amo\Sdk\Models\Participant;
 use Amo\Sdk\Models\SubjectParticipantsResponse;
@@ -51,7 +51,7 @@ class SubjectServiceTest extends TestCase
             'httpClient' => new Client(['handler' => $handlerStack]),
         ]);
 
-        $subscribersRemoveResponse = $sdk->team($testTeamID)->subject($testSubjectID)->subscribersRemove(new ParticipantCollection([
+        $subscribersRemoveResponse = $sdk->team($testTeamID)->subject($testSubjectID)->subscribersRemove(new UserCollection([
             Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
             Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
             Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
@@ -100,7 +100,7 @@ class SubjectServiceTest extends TestCase
             'httpClient' => new Client(['handler' => $handlerStack]),
         ]);
 
-        $subscribersAddedResponse = $sdk->team($testTeamID)->subject($testSubjectID)->subscribersAdd(new ParticipantCollection(
+        $subscribersAddedResponse = $sdk->team($testTeamID)->subject($testSubjectID)->subscribersAdd(new UserCollection(
             [
                 Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
@@ -153,7 +153,7 @@ class SubjectServiceTest extends TestCase
             'httpClient' => new Client(['handler' => $handlerStack]),
         ]);
 
-        $participantsRemoveResponse = $sdk->team($testTeamID)->subject($testSubjectID)->participantsRemove(new ParticipantCollection([
+        $participantsRemoveResponse = $sdk->team($testTeamID)->subject($testSubjectID)->participantsRemove(new UserCollection([
             Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
             Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
             Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
@@ -202,7 +202,7 @@ class SubjectServiceTest extends TestCase
             'httpClient' => new Client(['handler' => $handlerStack]),
         ]);
 
-        $participantsAddedResponse = $sdk->team($testTeamID)->subject($testSubjectID)->participantsAdd(new ParticipantCollection(
+        $participantsAddedResponse = $sdk->team($testTeamID)->subject($testSubjectID)->participantsAdd(new UserCollection(
             [
                 Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
@@ -240,12 +240,12 @@ class SubjectServiceTest extends TestCase
             'title' => 'Subject Title',
             'external_link' => 'https://example.com/',
             'author' => Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
-            'participants' => new ParticipantCollection([
+            'participants' => new UserCollection([
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
             ]),
-            'subscribers' => new ParticipantCollection([
+            'subscribers' => new UserCollection([
                 Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
@@ -285,12 +285,12 @@ class SubjectServiceTest extends TestCase
             'title' => 'Subject Title',
             'external_link' => 'https://example.com/',
             'author' =>  Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
-            'participants' => new ParticipantCollection([
+            'participants' => new UserCollection([
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::bot('ebfaf836-f07b-4df5-809c-2bedb4a2f924')
             ]),
-            'subscribers' => new ParticipantCollection([
+            'subscribers' => new UserCollection([
                 Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::department('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                 Participant::accessList('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),

@@ -4,7 +4,7 @@ namespace Integration;
 
 use Amo\Sdk\AmoClient;
 use Amo\Sdk\Models\Participant;
-use Amo\Sdk\Models\ParticipantCollection;
+use Amo\Sdk\Models\UserCollection;
 use Amo\Sdk\Models\Profile;
 use Amo\Sdk\Models\Subject;
 use Amo\Sdk\Models\SubjectStatus;
@@ -58,13 +58,13 @@ class SubjectAPITest extends TestCase
             'title' => 'Subject Title',
             'external_link' => 'https://example.com/',
             'author' => Participant::user($createdProfile),
-            'participants' => new ParticipantCollection([
+            'participants' => new UserCollection([
                     Participant::user('218a98bc-3a0a-11eb-a9a1-00163e18b446'),
                     Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
                     Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
                     Participant::bot('124479fa-5f2e-11ec-bf63-0242ac130002'),
                 ]),
-            'subscribers' => new ParticipantCollection([
+            'subscribers' => new UserCollection([
                     Participant::user('ebfaf836-f07b-4df5-809c-2bedb4a2f924'),
                     Participant::department('04469c3e-5f2e-11ec-bf63-0242ac130002'),
                     Participant::accessList('0eba2bd6-5f2e-11ec-bf63-0242ac130002'),
@@ -94,7 +94,7 @@ class SubjectAPITest extends TestCase
 
         $subjectService = $teamScopeSdk->subject($createdSubject->getId());
 
-        $participantsAdded = $subjectService->participantsAdd(new ParticipantCollection([
+        $participantsAdded = $subjectService->participantsAdd(new UserCollection([
             Participant::user($invitedUser),
         ]));
         print 'Participant Added. Count: '.$participantsAdded->getCount().' Affected: '.$participantsAdded->getAffected()."\n";
@@ -104,7 +104,7 @@ class SubjectAPITest extends TestCase
 //        ]));
 //        print 'Participant removed. Count: '.$participantsRemoved->getCount().' Affected: '.$participantsRemoved->getAffected()."\n";
 
-        $subscriberAdded = $subjectService->subscribersAdd(new ParticipantCollection([
+        $subscriberAdded = $subjectService->subscribersAdd(new UserCollection([
             Participant::user($invitedUser),
         ]));
         print 'Subscriber Added. Count: '.$subscriberAdded->getCount().' Affected: '.$subscriberAdded->getAffected()."\n";

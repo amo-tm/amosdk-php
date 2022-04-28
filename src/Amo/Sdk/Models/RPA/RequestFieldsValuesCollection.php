@@ -4,9 +4,10 @@ namespace Amo\Sdk\Models\RPA;
 
 use Amo\Sdk\Models\AbstractCollectionModel;
 
-class RequestFieldsValues extends AbstractCollectionModel
+class RequestFieldsValuesCollection extends AbstractCollectionModel
 {
     protected int $collectionType = self::COLLECTION_TYPE_MAP;
+
     protected string $itemClass = RequestFieldValue::class;
 
     public function getValue(string $fieldId): ?RequestFieldValue {

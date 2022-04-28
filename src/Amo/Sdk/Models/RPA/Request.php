@@ -12,10 +12,10 @@ class Request extends AbstractModel
     protected string $seqId;
     protected string $authorId;
     protected ?string $externalId = null;
-    protected ?RequestFieldsValues $fieldValues = null;
+    protected ?RequestFieldsValuesCollection $fieldValues = null;
 
     protected array $cast = [
-        'fieldValues' => RequestFieldsValues::class
+        'fieldValues' => RequestFieldsValuesCollection::class
     ];
 
     protected array $_embedded = [
@@ -76,9 +76,9 @@ class Request extends AbstractModel
     }
 
     /**
-     * @return RequestFieldsValues
+     * @return RequestFieldsValuesCollection
      */
-    public function getFieldValues(): RequestFieldsValues
+    public function getFieldValues(): RequestFieldsValuesCollection
     {
         return $this->fieldValues;
     }
@@ -89,7 +89,7 @@ class Request extends AbstractModel
 
     public function setFieldValue(string $fieldId, ?RequestFieldValue $value): void {
         if (is_null($this->fieldValues)) {
-            $this->fieldValues = new RequestFieldsValues([]);
+            $this->fieldValues = new RequestFieldsValuesCollection([]);
         }
         $this->fieldValues->setValue($fieldId, $value);
     }

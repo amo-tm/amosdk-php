@@ -7,6 +7,7 @@ use Amo\Sdk\Models\FreeModel;
 use Amo\Sdk\Models\Team;
 use Amo\Sdk\Models\TeamProps;
 use Amo\Sdk\Models\User;
+use Amo\Sdk\Models\UserListResponse;
 use Amo\Sdk\Service\v1_0\AccessListService;
 use Amo\Sdk\Traits\ServiceInitializer;
 use League\OAuth2\Client\Token\AccessToken;
@@ -63,6 +64,11 @@ class TeamService extends AbstractService
     public function kick(string $userId): void
     {
         $this->apiClient->delete($this->teamUrl(['users', $userId]));
+    }
+
+    public function users(): UserListResponse {
+        $usersResponse = $this->apiClient->get('/users');
+        return UserListResponse::fromStream($usersResponse->getBody());
     }
 
     /**

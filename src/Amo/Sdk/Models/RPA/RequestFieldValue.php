@@ -3,7 +3,7 @@
 namespace Amo\Sdk\Models\RPA;
 
 use Amo\Sdk\Models\AbstractModel;
-use Amo\Sdk\Models\ParticipantCollection;
+use Amo\Sdk\Models\UserCollection;
 
 class RequestFieldValue extends AbstractModel
 {
@@ -46,9 +46,9 @@ class RequestFieldValue extends AbstractModel
     }
 
     /**
-     * @return ParticipantCollection|null
+     * @return UserCollection|null
      */
-    public function getUsers(): ?ParticipantCollection
+    public function getUsers(): ?UserCollection
     {
         return $this->users;
     }
@@ -62,7 +62,7 @@ class RequestFieldValue extends AbstractModel
     }
     protected ?float $float;
     protected ?int $int;
-    protected ?ParticipantCollection $users;
+    protected ?UserCollection $users;
 
     /**
      * @var int[]|null
@@ -70,7 +70,7 @@ class RequestFieldValue extends AbstractModel
     protected ?array $int_range;
 
     /**
-     * @return ParticipantCollection|float|int|string|string[]|null
+     * @return UserCollection|float|int|string|string[]|null
      */
     public function getValue() {
         switch (true) {

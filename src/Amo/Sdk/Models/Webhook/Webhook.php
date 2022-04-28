@@ -8,6 +8,7 @@ use Carbon\Carbon;
 class Webhook extends AbstractModel
 {
     const RPA_BOT_CONTROL_TRANSFERRED = "rpa_bot_control_transferred";
+    const RPA_REQUEST_UPDATED = "rpa_request_updated";
 
     /**
      * @return string
@@ -46,7 +47,8 @@ class Webhook extends AbstractModel
     protected Carbon $eventTime;
     protected array $_embedded = [
         'context' => WebhookContext::class,
-        'rpaBotControlTransferred' => WebhookRpaBotControlTransferred::class
+        'rpaBotControlTransferred' => WebhookRpaBotControlTransferred::class,
+        'rpaRequestUpdated' => WebhookRpaRequestUpdated::class
     ];
 
     protected array $cast = [

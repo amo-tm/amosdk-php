@@ -4,7 +4,7 @@ namespace Amo\Sdk\Service;
 
 use Amo\Sdk\AmoClient;
 use Amo\Sdk\Models\Participant;
-use Amo\Sdk\Models\ParticipantCollection;
+use Amo\Sdk\Models\UserCollection;
 use Amo\Sdk\Models\Subject;
 use Amo\Sdk\Models\SubjectCreateRequest;
 use Amo\Sdk\Models\SubjectCreateResponse;
@@ -25,7 +25,7 @@ class SubjectService extends AbstractService
         $this->apiClient = $teamService->apiClient;
     }
 
-    public function subscribersRemove(ParticipantCollection $participants): SubjectParticipantsResponse {
+    public function subscribersRemove(UserCollection $participants): SubjectParticipantsResponse {
         $resp = $this->teamService->apiClient->delete($this->subjectUrl('/subscribers'), [
             'body' => $participants
         ]);
@@ -38,7 +38,7 @@ class SubjectService extends AbstractService
      * @return SubjectParticipantsResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function subscribersAdd(ParticipantCollection $participants): SubjectParticipantsResponse {
+    public function subscribersAdd(UserCollection $participants): SubjectParticipantsResponse {
         $resp = $this->teamService->apiClient->put($this->subjectUrl('/subscribers'), [
             'body' => $participants
         ]);
@@ -51,7 +51,7 @@ class SubjectService extends AbstractService
      * @return SubjectParticipantsResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function participantsRemove(ParticipantCollection $participants): SubjectParticipantsResponse {
+    public function participantsRemove(UserCollection $participants): SubjectParticipantsResponse {
         $resp = $this->teamService->apiClient->delete($this->subjectUrl('/participants'), [
             'body' => $participants
         ]);
@@ -64,7 +64,7 @@ class SubjectService extends AbstractService
      * @return SubjectParticipantsResponse
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function participantsAdd(ParticipantCollection $participants): SubjectParticipantsResponse {
+    public function participantsAdd(UserCollection $participants): SubjectParticipantsResponse {
         $resp = $this->teamService->apiClient->put($this->subjectUrl('/participants'), [
             'body' => $participants
         ]);

@@ -13,15 +13,15 @@ class Subject extends AbstractModel
     protected string $title;
     protected string $externalLink;
     protected Participant $author;
-    protected ?ParticipantCollection $participants = null;
-    protected ?ParticipantCollection $subscribers = null;
+    protected ?UserCollection $participants = null;
+    protected ?UserCollection $subscribers = null;
     protected SubjectStatusCollection $status;
 
 
     protected array $cast = [
         'author' => Participant::class,
-        'participants' => ParticipantCollection::class,
-        'subscribers' => ParticipantCollection::class,
+        'participants' => UserCollection::class,
+        'subscribers' => UserCollection::class,
         'status' => SubjectStatusCollection::class,
     ];
 
