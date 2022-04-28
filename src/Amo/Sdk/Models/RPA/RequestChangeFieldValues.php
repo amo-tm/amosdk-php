@@ -6,9 +6,9 @@ use Amo\Sdk\Models\AbstractModel;
 
 class RequestChangeFieldValues extends AbstractModel
 {
-    protected RequestFieldsValuesCollection $fieldsValues;
+    protected RequestFieldValue $fieldsValues;
 
     protected array $cast = [
-        'fieldsValues' => RequestFieldsValuesCollection::class,
+        'fieldsValues' => RequestFieldValue::class,
     ];
 }
