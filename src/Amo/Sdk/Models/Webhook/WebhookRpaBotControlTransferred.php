@@ -13,7 +13,7 @@ class WebhookRpaBotControlTransferred extends AbstractModel implements Interface
 
     protected string $widgetId;
     protected string $botId;
-    protected ?array  $inputValues;
+    protected ?array $inputValues = null;
 
     /**
      * @return string
