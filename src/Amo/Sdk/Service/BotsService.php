@@ -2,6 +2,7 @@
 
 namespace Amo\Sdk\Service;
 
+use Amo\Sdk\Models\RPA\Bot;
 use Amo\Sdk\Models\RPA\BotListResponse;
 use Amo\Sdk\Models\RPA\BotReturnControlRequest;
 use Amo\Sdk\Models\RPA\BotRunParams;
@@ -69,6 +70,13 @@ class BotsService extends AbstractService
             $this->getUrl(),
         );
         return BotListResponse::fromStream($response->getBody());
+    }
+
+    public function byId($botid): Bot {
+        $response = $this->apiClient->get(
+            $this->getUrl($botid),
+        );
+        return Bot::fromStream($response->getBody());
     }
 
     public function run(BotRunParams $runParams): Request {
