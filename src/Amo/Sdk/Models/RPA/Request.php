@@ -11,6 +11,7 @@ class Request extends AbstractModel
     protected string $title;
     protected string $seqId;
     protected string $authorId;
+    protected string $responsibleId;
     protected ?string $externalId = null;
     protected ?RequestFieldsValuesCollection $fieldValues = null;
 
@@ -92,5 +93,13 @@ class Request extends AbstractModel
             $this->fieldValues = new RequestFieldsValuesCollection([]);
         }
         $this->fieldValues->setValue($fieldId, $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponsibleId(): string
+    {
+        return $this->responsibleId;
     }
 }
