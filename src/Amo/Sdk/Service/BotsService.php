@@ -2,6 +2,8 @@
 
 namespace Amo\Sdk\Service;
 
+use Amo\Sdk\Models\Messages\MessageCollection;
+use Amo\Sdk\Models\Messages\MessageSearchResponse;
 use Amo\Sdk\Models\RPA\Bot;
 use Amo\Sdk\Models\RPA\BotListResponse;
 use Amo\Sdk\Models\RPA\BotReturnControlRequest;
@@ -10,6 +12,12 @@ use Amo\Sdk\Models\RPA\Request;
 
 class BotsService extends AbstractService
 {
+    const REQUEST_SEARCH_DEFAULT_LIMIT = 50;
+    public const REQUEST_SEARCH_TYPE_PHOTO = 1;
+    public const REQUEST_SEARCH_TYPE_DOCUMENT = 2;
+    public const REQUEST_SEARCH_TYPE_VIDEO = 3;
+    public const REQUEST_SEARCH_TYPE_VOICE = 4;
+
     protected TeamService $teamService;
     protected ?string $botId = null;
 
@@ -31,15 +39,15 @@ class BotsService extends AbstractService
         );
     }
 
-    private function getRequestUrl(string $requestId, $location = null): string
+    private function getRequestUrl(string $requestId, $location = null, $args = []): string
     {
         return $this->getUrl(array_merge(
             ['request', $requestId],
             (array)$location
-        ));
+        ), $args);
     }
 
-    private function getUrl($location = null): string
+    private function getUrl($location = null, $args = []): string
     {
         $location = implode('/', (array)$location);
 
@@ -50,6 +58,14 @@ class BotsService extends AbstractService
 
         if ($location) {
             $url .= '/' . ltrim($location, '/');
+        }
+
+        if (count($args) > 0) {
+            $url .= '?' . preg_replace(
+                '/(%5B)\d+(%5D=)/i',
+                '$1$2',
+                http_build_query($args, "", null, PHP_QUERY_RFC3986)
+            );
         }
 
         return $url;
@@ -63,6 +79,24 @@ class BotsService extends AbstractService
             ]
         );
         return Request::fromStream($response->getBody());
+    }
+
+    public function requestSearch(string $requestId, array $options = []): MessageSearchResponse {
+        $args = [];
+        foreach ($options['type'] ?? [] as $type) {
+            $args['filter']['type'][] = $type;
+        }
+        $args['page']['limit'] = $options['page_limit'] ?? self::REQUEST_SEARCH_DEFAULT_LIMIT;
+
+        if (!empty($options['page_token'])) {
+            $args['page']['token'] = $options['page_token'];
+        }
+
+        $response = $this->apiClient->get(
+            $this->getRequestUrl($requestId, 'search', $args),
+        );
+
+        return MessageSearchResponse::fromStream($response->getBody());
     }
 
     public function get(): BotListResponse {

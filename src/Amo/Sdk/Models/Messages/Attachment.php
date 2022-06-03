@@ -3,6 +3,7 @@
 namespace Amo\Sdk\Models\Messages;
 
 use Amo\Sdk\Models\AbstractModel;
+use Amo\Sdk\Models\File;
 
 class Attachment extends AbstractModel
 {
@@ -45,5 +46,15 @@ class Attachment extends AbstractModel
             'type' => 'video',
             'video' => $video
         ]);
+    }
+
+    public function getFile(): ?File {
+        return match (true) {
+            $this->photo != null => $this->photo->getFile(),
+            $this->document != null => $this->document->getFile(),
+            $this->video != null => $this->video->getFile(),
+            $this->voice != null => $this->voice->getFile(),
+            default => null,
+        };
     }
 }

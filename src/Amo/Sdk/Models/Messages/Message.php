@@ -21,9 +21,19 @@ class Message extends AbstractModel
 
     protected Carbon $updatedAt;
 
-    protected ReplyMarkup $replyMarkup;
+    protected ?ReplyMarkup $replyMarkup;
 
-    protected MessageRef $replyTo;
+    protected ?MessageRef $replyTo;
+
+    protected array $cast = [
+        'author' => Participant::class,
+        'receiver' => Participant::class,
+        'attachments' => AttachmentCollection::class,
+        'replyMarkup' => ReplyMarkup::class,
+        'replyTo' => MessageRef::class,
+        'createdAt' => Carbon::class,
+        'updatedAt' => Carbon::class,
+    ];
 
     static public function text(string $text): Message {
         return new Message([
@@ -92,9 +102,9 @@ class Message extends AbstractModel
     }
 
     /**
-     * @return AttachmentInterface[]
+     * @return AttachmentCollection|Attachment[]|null
      */
-    public function getAttachments(): array
+    public function getAttachments(): ?AttachmentCollection
     {
         return $this->attachments;
     }
