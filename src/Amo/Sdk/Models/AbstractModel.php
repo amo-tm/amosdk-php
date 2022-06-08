@@ -7,6 +7,7 @@ use Psr\Http\Message\StreamInterface;
 
 abstract class AbstractModel
 {
+    protected array $_links = [];
     protected array $_embedded = [];
     private array $embeddedData = [];
     protected array $cast = [];
@@ -120,6 +121,10 @@ abstract class AbstractModel
                 $this->setEmbedded($value);
                 continue;
             }
+            if ($key === '_links') {
+                $this->_links = $value;
+                continue;
+            }
             $camelKey = $this->toCamel($key);
             if ($this->isPropertyExists($camelKey)) {
                 $propType = $this->cast[$camelKey] ?? null;
@@ -161,5 +166,9 @@ abstract class AbstractModel
                 }
             }
         }
+    }
+
+    public function getLink(string $link): ?string {
+        return $this->_links[$link]['href'] ?? null;
     }
 }
