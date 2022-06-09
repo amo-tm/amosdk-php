@@ -100,4 +100,14 @@ class RequestFieldValue extends AbstractModel
             'int' => $v
         ]);
     }
+
+    /**
+     * @param string[] $v
+     * @return RequestFieldValue
+     */
+    public static function enumId(array $v): RequestFieldValue {
+        return new RequestFieldValue([
+            'enumId' => $v
+        ]);
+    }
 }
