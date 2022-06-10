@@ -7,11 +7,11 @@ use Amo\Sdk\Models\UserCollection;
 
 class RequestFieldValue extends AbstractModel
 {
-    protected ?string $string;
+    protected ?string $string = null;
     /**
      * @var string[]|null
      */
-    protected ?array $enumId;
+    protected ?array $enumId = null;
 
     /**
      * @return string|null
@@ -58,16 +58,16 @@ class RequestFieldValue extends AbstractModel
      */
     public function getIntRange(): ?array
     {
-        return $this->int_range;
+        return $this->intRange;
     }
-    protected ?float $float;
-    protected ?int $int;
-    protected ?UserCollection $users;
+    protected ?float $float = null;
+    protected ?int $int = null;
+    protected ?UserCollection $users = null;
 
     /**
      * @var int[]|null
      */
-    protected ?array $int_range;
+    protected ?array $intRange = null;
 
     /**
      * @return UserCollection|float|int|string|string[]|null
@@ -84,6 +84,8 @@ class RequestFieldValue extends AbstractModel
                 return $this->int;
             case !is_null($this->users):
                 return $this->users;
+            case !is_null($this->intRange):
+                return $this->intRange;
             default:
                 return null;
         }
