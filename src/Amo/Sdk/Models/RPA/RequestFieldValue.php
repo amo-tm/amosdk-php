@@ -60,10 +60,16 @@ class RequestFieldValue extends AbstractModel
     {
         return $this->intRange;
     }
+
+    public function getCurrency(): ?array
+    {
+        return $this->currency;
+    }
+
     protected ?float $float = null;
     protected ?int $int = null;
     protected ?UserCollection $users = null;
-
+    protected ?array $currency = null;
     /**
      * @var int[]|null
      */
@@ -100,6 +106,18 @@ class RequestFieldValue extends AbstractModel
     public static function int(int $v): RequestFieldValue {
         return new RequestFieldValue([
             'int' => $v
+        ]);
+    }
+
+    public static function float(float $v): RequestFieldValue {
+        return new RequestFieldValue([
+            'float' => $v
+        ]);
+    }
+
+    public static function currency(array $v): RequestFieldValue {
+        return new RequestFieldValue([
+            'currency' => $v
         ]);
     }
 

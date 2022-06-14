@@ -81,6 +81,16 @@ class BotsService extends AbstractService
         return Request::fromStream($response->getBody());
     }
 
+    public function getRequest(Request $request): Request {
+        $response = $this->apiClient->get(
+            $this->getRequestUrl($request->getId()),
+            [
+                'body' => $request
+            ]
+        );
+        return Request::fromStream($response->getBody());
+    }
+
     public function requestSearch(string $requestId, array $options = []): MessageSearchResponse {
         $args = [];
         foreach ($options['type'] ?? [] as $type) {
