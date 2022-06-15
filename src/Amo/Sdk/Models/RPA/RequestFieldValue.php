@@ -3,6 +3,7 @@
 namespace Amo\Sdk\Models\RPA;
 
 use Amo\Sdk\Models\AbstractModel;
+use Amo\Sdk\Models\Currency;
 use Amo\Sdk\Models\UserCollection;
 
 class RequestFieldValue extends AbstractModel
@@ -12,6 +13,10 @@ class RequestFieldValue extends AbstractModel
      * @var string[]|null
      */
     protected ?array $enumId = null;
+
+    protected array $cast = [
+        'currency' => Currency::class,
+    ];
 
     /**
      * @return string|null
@@ -61,7 +66,7 @@ class RequestFieldValue extends AbstractModel
         return $this->intRange;
     }
 
-    public function getCurrency(): ?array
+    public function getCurrency(): ?Currency
     {
         return $this->currency;
     }
@@ -69,7 +74,7 @@ class RequestFieldValue extends AbstractModel
     protected ?float $float = null;
     protected ?int $int = null;
     protected ?UserCollection $users = null;
-    protected ?array $currency = null;
+    protected ?Currency $currency = null;
     /**
      * @var int[]|null
      */
@@ -115,7 +120,7 @@ class RequestFieldValue extends AbstractModel
         ]);
     }
 
-    public static function currency(array $v): RequestFieldValue {
+    public static function currency(Currency $v): RequestFieldValue {
         return new RequestFieldValue([
             'currency' => $v
         ]);
