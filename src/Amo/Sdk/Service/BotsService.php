@@ -2,6 +2,9 @@
 
 namespace Amo\Sdk\Service;
 
+use Amo\Sdk\Models\FreeModel;
+use Amo\Sdk\Models\MarkupProcessRequest;
+use Amo\Sdk\Models\MarkupProcessResponse;
 use Amo\Sdk\Models\Messages\MessageCollection;
 use Amo\Sdk\Models\Messages\MessageSearchResponse;
 use Amo\Sdk\Models\RPA\Bot;
@@ -79,6 +82,16 @@ class BotsService extends AbstractService
             ]
         );
         return Request::fromStream($response->getBody());
+    }
+
+    public function processMarkup(string $requestID, MarkupProcessRequest $request): MarkupProcessResponse {
+        $response = $this->apiClient->post(
+            $this->getRequestUrl($requestID, 'processMarkup'),
+            [
+                'body' => $request
+            ]
+        );
+        return MarkupProcessResponse::fromStream($response->getBody());
     }
 
     public function getRequest(string $id): Request {
