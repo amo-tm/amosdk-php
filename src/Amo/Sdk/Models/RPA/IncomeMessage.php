@@ -8,7 +8,7 @@ class IncomeMessage extends AbstractModel
 {
     protected string $id;
     protected array  $author;
-    protected string $receiver;
+    protected array  $receiver;
     protected string $text;
     protected string $created_at;
     protected string $updated_at;
