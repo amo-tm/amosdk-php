@@ -13,12 +13,18 @@ class IncomeMessage extends AbstractModel
     protected string $created_at;
     protected string $updated_at;
 
-     /**
-     * @return string
-     */
-    public function getId(): string
+    public function __construct(?array $data)
     {
-        return $this->id;
+        if (is_array($data))
+            $this->setData($data);
+    }
+    
+     /**
+     * @return string|null
+     */
+    public function getId(): ?string
+    {
+        return (isset($this->id)) ? $this->id : null;
     }
 
     /**
