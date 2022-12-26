@@ -3,6 +3,7 @@
 namespace Amo\Sdk\Models\RPA;
 
 use Amo\Sdk\Models\AbstractModel;
+use Amo\Sdk\Models\Participant;
 
 class Request extends AbstractModel
 {
@@ -12,12 +13,13 @@ class Request extends AbstractModel
     protected string $seqId;
     protected string $authorId;
     protected string $responsibleId;
-    protected ?array $responsible;
+    protected ?Participant $responsible;
     protected ?string $externalId = null;
     protected ?RequestFieldsValuesCollection $fieldValues = null;
 
     protected array $cast = [
-        'fieldValues' => RequestFieldsValuesCollection::class
+        'fieldValues' => RequestFieldsValuesCollection::class,
+        'responsible' => Participant::class
     ];
 
     protected array $_embedded = [
@@ -105,9 +107,9 @@ class Request extends AbstractModel
     }
     
     /**
-     * @return array
+     * @return null|Participant
      */
-    public function getResponsible(): array
+    public function getResponsible(): ?Participant
     {
         return $this->responsible;
     }
