@@ -38,7 +38,7 @@ class WebhookRpaBotControlTransferred extends AbstractModel implements Interface
     }
     
     public function getIncomeMessage(): IncomeMessage {
-        return $this->getEmbedded('income_message');
+        return $this->getEmbedded('incomeMessage');
     }
 
     /**
