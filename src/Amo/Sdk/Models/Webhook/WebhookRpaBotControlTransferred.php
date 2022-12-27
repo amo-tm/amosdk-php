@@ -4,13 +4,13 @@ namespace Amo\Sdk\Models\Webhook;
 
 use Amo\Sdk\Models\AbstractModel;
 use Amo\Sdk\Models\RPA\Request;
-use Amo\Sdk\Models\RPA\IncomeMessage;
+use Amo\Sdk\Models\Messages\Message;
 
 class WebhookRpaBotControlTransferred extends AbstractModel implements Interfaces\WebhookWidgetEvent
 {
     protected array $_embedded = [
         'request' => Request::class,
-        'incomeMessage' => IncomeMessage::class
+        'incomeMessage' => Message::class
     ];
 
     protected string $widgetId;
@@ -37,7 +37,7 @@ class WebhookRpaBotControlTransferred extends AbstractModel implements Interface
         return $this->getEmbedded('request');
     }
     
-    public function getIncomeMessage(): IncomeMessage {
+    public function getIncomeMessage(): Message {
         return $this->getEmbedded('incomeMessage');
     }
 
