@@ -16,6 +16,7 @@ class RequestFieldValue extends AbstractModel
 
     protected array $cast = [
         'currency' => Currency::class,
+        'users' =>  UserCollection::class
     ];
 
     /**
