@@ -16,7 +16,7 @@ class WebhookRpaRequestUpdated extends AbstractModel implements Interfaces\Webho
 
     protected string $requestId;
     protected \DateTimeInterface $modifiedAt;
-    protected RequestChangesCollection|array $changes = [];
+    protected ?RequestChangesCollection $changes = null;
 
     protected array $cast = [
         'changes' => RequestChangesCollection::class,
@@ -46,9 +46,9 @@ class WebhookRpaRequestUpdated extends AbstractModel implements Interfaces\Webho
     /**
      * @return RequestChangesCollection|RequestChange[]
      */
-    public function getChanges(): RequestChangesCollection|array
+    public function getChanges(): RequestChangesCollection
     {
-        return $this->changes;
+        return $this->changes ?? new RequestChangesCollection([]);
     }
 
 
