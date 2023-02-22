@@ -35,7 +35,8 @@ abstract class AbstractModel
             }
             if ($value instanceof AbstractModel) {
                 $resp[$this->toSnake($key)] = $value->toApi();
-            } else if (!empty($value)) {
+            //is_numeric чтобы не пропустить 0 как empty для int, float и string
+            } else if (!empty($value) || is_numeric($value)) {
                 $resp[$this->toSnake($key)] = $this->valueToApi($value);
             }
         }
