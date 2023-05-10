@@ -46,6 +46,11 @@ class AbstractCollectionModel extends AbstractModel implements \Iterator, \Array
         return $data;
     }
 
+    public function toJson(): string
+    {
+        return json_encode($this->toApi());
+    }
+
     public function toArray(): array
     {
         return $this->items;
