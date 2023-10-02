@@ -4,7 +4,7 @@ namespace Amo\Sdk\Models\RPA;
 
 use Amo\Sdk\Models\AbstractModel;
 use Amo\Sdk\Models\Currency;
-use Amo\Sdk\Models\UserCollection;
+use Amo\Sdk\Models\ParticipantCollection;
 
 class RequestFieldValue extends AbstractModel
 {
@@ -16,7 +16,7 @@ class RequestFieldValue extends AbstractModel
 
     protected array $cast = [
         'currency' => Currency::class,
-        'users' =>  UserCollection::class
+        'users' =>  ParticipantCollection::class
     ];
 
     /**
@@ -52,9 +52,9 @@ class RequestFieldValue extends AbstractModel
     }
 
     /**
-     * @return UserCollection|null
+     * @return ParticipantCollection|null
      */
-    public function getUsers(): ?UserCollection
+    public function getUsers(): ?ParticipantCollection
     {
         return $this->users;
     }
@@ -74,7 +74,7 @@ class RequestFieldValue extends AbstractModel
 
     protected ?float $float = null;
     protected ?int $int = null;
-    protected ?UserCollection $users = null;
+    protected ?ParticipantCollection $users = null;
     protected ?Currency $currency = null;
     /**
      * @var int[]|null
@@ -82,7 +82,7 @@ class RequestFieldValue extends AbstractModel
     protected ?array $intRange = null;
 
     /**
-     * @return UserCollection|float|int|string|string[]|null
+     * @return ParticipantCollection|float|int|string|string[]|null
      */
     public function getValue() {
         switch (true) {
