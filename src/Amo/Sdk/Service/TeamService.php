@@ -71,6 +71,12 @@ class TeamService extends AbstractService
         return UserListResponse::fromStream($usersResponse->getBody());
     }
 
+    public function user(string $userId): User {
+        $userResponse = $this->apiClient->get('/users/' . $userId, ['version' => 'v1.0']);
+
+        return User::fromStream($userResponse->getBody());
+    }
+
     /**
      * @param  string|string[] $location
      * @return string
