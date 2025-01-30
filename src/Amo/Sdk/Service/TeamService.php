@@ -3,6 +3,7 @@
 namespace Amo\Sdk\Service;
 
 use Amo\Sdk\AmoClient;
+use Amo\Sdk\Filters\UsersFilter;
 use Amo\Sdk\Models\FreeModel;
 use Amo\Sdk\Models\Team;
 use Amo\Sdk\Models\TeamProps;
@@ -66,16 +67,16 @@ class TeamService extends AbstractService
         $this->apiClient->delete($this->teamUrl(['users', $userId]));
     }
 
-    public function users(): UserListResponse {
-        $usersResponse = $this->apiClient->get('/users');
-        return UserListResponse::fromStream($usersResponse->getBody());
-    }
-
-    public function user(string $userId): User
+    public function users(?UsersFilter $usersFilter = null): UserListResponse
     {
-        $userResponse = $this->apiClient->get('/users/' . $userId, ['version' => 'v1.0']);
+        $filter = [];
+        if (!empty($usersFilter)) {
+            $filter = $usersFilter->buildFilter();
+        }
 
-        return User::fromStream($userResponse->getBody());
+        $usersResponse = $this->apiClient->get('/users', $filter);
+
+        return UserListResponse::fromStream($usersResponse->getBody());
     }
 
     /**
