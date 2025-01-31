@@ -30,4 +30,21 @@ class UsersFilter extends AbstractFilter
 
         return $filter;
     }
+
+    public function buildQueryFilter(): string
+    {
+        $filter = $this->buildFilter();
+        if (empty($filter)) {
+            return '';
+        }
+
+        $queryParams = http_build_query(
+            $filter,
+            "",
+            '&',
+            PHP_QUERY_RFC3986
+        );
+
+        return preg_replace('/(%5B)\d+(%5D=)/i','$1$2',$queryParams);
+    }
 }
