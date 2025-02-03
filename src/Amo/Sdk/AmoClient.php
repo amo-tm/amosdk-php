@@ -216,12 +216,8 @@ class AmoClient
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function get(string $url, array $options = [], ?AbstractFilter $filter = null): ResponseInterface
+    public function get(string $url, array $options = []): ResponseInterface
     {
-        if (!empty($filter)) {
-            $options['query'] = $filter->buildFilter();
-        }
-
         return $this->makeRequest('GET', $url, $options);
     }
 
@@ -271,9 +267,9 @@ class AmoClient
             $baseURL = $this->baseURL . '/' . ($options['version'] ?? $this->version);
         }
 
-        if (!empty($options['query'])) {
+        if (!empty($options['query']) && $options['query'] instanceof AbstractFilter) {
             $queryParams = http_build_query(
-                $options['query'],
+                $options['query']->buildFilter(),
                 "",
                 '&',
                 PHP_QUERY_RFC3986
