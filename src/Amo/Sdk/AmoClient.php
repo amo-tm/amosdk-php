@@ -2,6 +2,7 @@
 
 namespace Amo\Sdk;
 
+use Amo\Sdk\Filters\AbstractFilter;
 use Amo\Sdk\OAuth2\Provider\AmoProvider;
 use Amo\Sdk\Service\MessagesService;
 use Amo\Sdk\Service\ProfileService;
@@ -215,8 +216,12 @@ class AmoClient
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function get(string $url, array $options = []): ResponseInterface
+    public function get(string $url, array $options = [], ?AbstractFilter $filter = null): ResponseInterface
     {
+        if (!empty($filter)) {
+            $options['query'] = $filter->buildFilter();
+        }
+
         return $this->makeRequest('GET', $url, $options);
     }
 
@@ -264,6 +269,16 @@ class AmoClient
             $baseURL = $this->authURL;
         } else {
             $baseURL = $this->baseURL . '/' . ($options['version'] ?? $this->version);
+        }
+
+        if (!empty($options['query'])) {
+            $queryParams = http_build_query(
+                $options['query'],
+                "",
+                '&',
+                PHP_QUERY_RFC3986
+            );
+            $url .= '?' . preg_replace('/(%5B)\d+(%5D=)/i','$1$2', $queryParams);
         }
 
         return $baseURL . '/' . ltrim($url, '/');

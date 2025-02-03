@@ -69,12 +69,7 @@ class TeamService extends AbstractService
 
     public function users(?UsersFilter $usersFilter = null): UserListResponse
     {
-        $url = '/users';
-        if (!empty($usersFilter)) {
-            $url .= '?' . $usersFilter->buildQueryFilter();
-        }
-
-        $usersResponse = $this->apiClient->get($url);
+        $usersResponse = $this->apiClient->get('/users', [], $usersFilter);
 
         return UserListResponse::fromStream($usersResponse->getBody());
     }
