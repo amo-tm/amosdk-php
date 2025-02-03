@@ -2,6 +2,7 @@
 
 namespace Amo\Sdk;
 
+use Amo\Sdk\Filters\AbstractFilter;
 use Amo\Sdk\OAuth2\Provider\AmoProvider;
 use Amo\Sdk\Service\MessagesService;
 use Amo\Sdk\Service\ProfileService;
@@ -264,6 +265,16 @@ class AmoClient
             $baseURL = $this->authURL;
         } else {
             $baseURL = $this->baseURL . '/' . ($options['version'] ?? $this->version);
+        }
+
+        if (!empty($options['query']) && $options['query'] instanceof AbstractFilter) {
+            $queryParams = http_build_query(
+                $options['query']->buildFilter(),
+                "",
+                '&',
+                PHP_QUERY_RFC3986
+            );
+            $url .= '?' . preg_replace('/(%5B)\d+(%5D=)/i','$1$2', $queryParams);
         }
 
         return $baseURL . '/' . ltrim($url, '/');
