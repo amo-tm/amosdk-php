@@ -15,6 +15,10 @@ class AccessDeniedApiException extends ApiException
     public static function signatureMismatch(): AccessDeniedApiException {
         return new self("signature mismatch", self::ERROR_SIGNATURE_MISMATCH);
     }
+
+    public static function accessDenied(): AccessDeniedApiException {
+        return new self("access denied", self::ERROR_ACCESS_DENIED);
+    }
 }
 
 

@@ -2,6 +2,7 @@
 
 namespace Amo\Sdk;
 
+use Amo\Sdk\Exceptions\AccessDeniedApiException;
 use Amo\Sdk\Filters\AbstractFilter;
 use Amo\Sdk\OAuth2\Provider\AmoProvider;
 use Amo\Sdk\Service\MessagesService;
@@ -11,6 +12,8 @@ use Amo\Sdk\Service\TeamService;
 use Amo\Sdk\Service\WebhookService;
 use Amo\Sdk\Traits\ServiceInitializer;
 use DateTimeImmutable;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\Encoding\UnifyAudience;
@@ -18,6 +21,7 @@ use Lcobucci\JWT\Encoding\UnixTimestampDates;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token\RegisteredClaims;
 use League\OAuth2\Client\Token\AccessToken;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -196,7 +200,8 @@ class AmoClient
             $this->accessToken,
             $options,
         );
-        return $this->provider->getHttpClient()->send($request);
+
+        return $this->sendRequest($request);
     }
 
     /**
@@ -314,5 +319,26 @@ class AmoClient
 
     public function getClientSecret(): ?string {
         return $this->initialOptions['clientSecret'] ?? null;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     * @return void
+     * @throws GuzzleException
+     * @throws AccessDeniedApiException
+     */
+    private function sendRequest(RequestInterface $request): ResponseInterface
+    {
+        try {
+            return $this->provider->getHttpClient()->send($request);
+        } catch (ClientException $clientException) {
+            switch ($clientException->getResponse()->getStatusCode()) {
+                case 403:
+                    throw AccessDeniedApiException::accessDenied();
+                default:
+                    throw $clientException;
+            }
+        }
     }
 }
