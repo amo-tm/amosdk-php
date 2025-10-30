@@ -2,6 +2,7 @@
 
 namespace Amo\Sdk\Service;
 
+use Amo\Sdk\Filters\BotsFilter;
 use Amo\Sdk\Models\FreeModel;
 use Amo\Sdk\Models\MarkupProcessRequest;
 use Amo\Sdk\Models\MarkupProcessResponse;
@@ -118,10 +119,12 @@ class BotsService extends AbstractService
         return MessageSearchResponse::fromStream($response->getBody());
     }
 
-    public function get(): BotListResponse {
+    public function get(?BotsFilter $botsFilter = null): BotListResponse {
         $response = $this->apiClient->get(
             $this->getUrl(),
+            ['query' => $botsFilter],
         );
+
         return BotListResponse::fromStream($response->getBody());
     }
 
