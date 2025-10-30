@@ -7,6 +7,7 @@ use Amo\Sdk\Models\AbstractModel;
 class BotListResponse extends AbstractModel
 {
     protected int $count;
+    protected ?string $pageToken = null;
 
     public array $_embedded = [
         'items' => BotListCollection::class
@@ -18,6 +19,11 @@ class BotListResponse extends AbstractModel
     public function getCount(): int
     {
         return $this->count;
+    }
+
+    public function getPageToken(): ?string
+    {
+        return $this->pageToken;
     }
 
     /**
