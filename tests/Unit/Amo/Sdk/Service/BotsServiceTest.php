@@ -87,6 +87,7 @@ class BotsServiceTest extends TestCase
 
         self::assertEquals("query=%D0%BE%D0%BF%D0%BB%D0%B0%D1%82%20%D1%81%D1%87%D1%91%D1%82&limit=10&page_token=eyJwcm90b3R5cGVfaWRfZ3QiOiJkYzI4M2FjMS1iNDFlLTExZjAtYjNlMS0wMjQyMGEwMDAxMTQifQ%3D%3D", $queryString);
         self::assertCount(2, $bots->getItems());
+        self::assertEquals("eyJwcm90b3R5cGVfaWRfZ3QiOiJkYzI4M2FjMS1iNDFlLTExZjAtYjNlMS0wMjQyMGEwMDAxMTQifQ==", $bots->getPageToken());
     }
 
     public function testAccessToken()
